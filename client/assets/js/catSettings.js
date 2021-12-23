@@ -2,12 +2,12 @@
 var colors = Object.values(allColors())
 
 var defaultDNA = {
-    "headcolor" : 10,
+    "headColor" : 10,
     "mouthColor" : 13,
     "eyesColor" : 96,
-    "earsColor" : 10,
-    //Cattributes
     "eyesShape" : 1,
+    "freckleColor" : 10,
+    //attributes
     "decorationPattern" : 1,
     "decorationMidcolor" : 13,
     "decorationSidescolor" : 13,
@@ -17,10 +17,10 @@ var defaultDNA = {
 
 // when page load
 $( document ).ready(function() {
-  $('#dnabody').html(defaultDNA.headColor);
+  $('#dnahead').html(defaultDNA.headColor);
   $('#dnamouth').html(defaultDNA.mouthColor);
   $('#dnaeyes').html(defaultDNA.eyesColor);
-  $('#dnaears').html(defaultDNA.earsColor);
+  $('#dnafreckles').html(defaultDNA.freckleColor);
     
 //   $('#dnashape').html(defaultDNA.eyesShape)
 //   $('#dnadecoration').html(defaultDNA.decorationPattern)
@@ -34,11 +34,11 @@ $( document ).ready(function() {
 
 function getDna(){
     var dna = ''
-    dna += $('#dnabody').html()
+    dna += $('#dnahead').html()
     dna += $('#dnamouth').html()
     dna += $('#dnaeyes').html()
-    dna += $('#dnaears').html()
     dna += $('#dnashape').html()
+    dna += $('#dnafreckles').html()
     dna += $('#dnadecoration').html()
     dna += $('#dnadecorationMid').html()
     dna += $('#dnadecorationSides').html()
@@ -49,12 +49,37 @@ function getDna(){
 }
 
 function renderCat(dna){
-    headColor(colors[dna.headcolor],dna.headcolor)
-    $('#bodycolor').val(dna.headcolor)
+    headColor(colors[dna.headColor],dna.headColor)
+    $('#headcolor').val(dna.headColor)
+
+    mouthColor(colors[dna.mouthColor],dna.mouthColor)
+    $('#mouthcolor').val(dna.mouthColor)
+
+    eyesColor(colors[dna.eyesColor],dna.eyesColor)
+    $('#eyescolor').val(dna.eyesColor)
+
+    frecklesColor(colors[dna.freckleColor],dna.freckleColor)
+    $('#frecklecolor').val(dna.freckleColor)
 }
 
 // Changing cat colors
-$('#bodycolor').change(()=>{
-    var colorVal = $('#bodycolor').val()
+$('#headcolor').change(()=>{
+    var colorVal = $('#headcolor').val()
     headColor(colors[colorVal],colorVal)
 })
+
+$('#mouthcolor').change(()=>{
+  var colorVal = $('#mouthcolor').val()
+  mouthColor(colors[colorVal],colorVal)
+})
+
+$('#eyecolor').change(()=>{
+  var colorVal = $('#eyecolor').val()
+  eyesColor(colors[colorVal],colorVal)
+})
+
+$('#frecklecolor').change(()=>{
+  var colorVal = $('#frecklecolor').val()
+  frecklesColor(colors[colorVal],colorVal)
+})
+

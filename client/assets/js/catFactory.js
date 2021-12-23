@@ -16,11 +16,28 @@ function genColors(){
 
 //This function code needs to modified so that it works with Your cat code.
 function headColor(color,code) {
-    $('.cat__head, .cat__chest').css('background', '#' + color)  //This changes the color of the cat
+    $('.frog__head').css('background', '#' + color)  //This changes the color of the frog's 
     $('#headcode').html('code: '+code) //This updates text of the badge next to the slider
-    $('#dnabody').html(code) //This updates the body color part of the DNA that is displayed below the cat
+    $('#dnahead').html(code) //This updates the head color part of the DNA that is displayed below the frog
 }
 
+function mouthColor(color,code) {
+    $('.frog__mouth').css('background', '#' + color) //This changes the color of the frog's mouth
+    $('#mouthcode').html('code: '+code) //This updates text of the badge next to the slider
+    $('#dnamouth').html(code) //This updates the body color part of the DNA that is displayed below the frog
+}
+
+function eyesColor(color,code) {
+    $('.frog__eye,.frog__eyelid').css('background', '#' + color)  //This changes the color of the frog's eyes
+    $('#eyecode').html('code: '+code) //This updates text of the badge next to the slider
+    $('#dnaeyes').html(code) //This updates the body color part of the DNA that is displayed below the frog
+}
+
+function frecklesColor(color,code) {
+    $('.frog__freckle').css('background', '#' + color)  //This changes the color of the frog's eyes
+    $('#frecklecode').html('code: '+code) //This updates text of the badge next to the slider
+    $('#dnafreckles').html(code) //This updates the body color part of the DNA that is displayed below the frog
+}
 
 //###################################################
 //Functions below will be used later on in the project
