@@ -7,11 +7,11 @@ var defaultDNA = {
     "eyesColor" : 96,
     "freckleColor" : 10,
     //attributes
-    "animation" :  1,
     "tongueShape" : "2",
     "eyeShape" : "2",
     "wartsShape" : "1",
     "wartColor" : 13,
+    "animation" :  "2",
     "lastNum" :  1
     }
 
@@ -26,6 +26,7 @@ $( document ).ready(function() {
   $('#dnaeyeShape').html(defaultDNA.eyeShape)
   $('#dnawartShape').html(defaultDNA.wartsShape)
   $('#dnawartsColor').html(defaultDNA.wartColor)
+  $('#dnaanimation').html(defaultDNA.animation)
   $('#dnaspecial').html(defaultDNA.lastNum)
 
   renderCat(defaultDNA)
@@ -72,6 +73,8 @@ function renderCat(dna){
     wartColor(colors[dna.wartColor],dna.wartColor)
     $('#wartColor').val(dna.wartColor)
 
+    animationSelection(dna.animation)
+    $('#animationType').val(dna.animation)
 }
 
 // Changing frog colors
@@ -115,3 +118,7 @@ $('#wartColor').change(()=>{
   wartColor(colors[colorVal],colorVal)
 })
 
+$('#animationType').change(()=>{
+  var animationtypeVal = $('#animationType').val()
+  animationSelection(animationtypeVal)
+})

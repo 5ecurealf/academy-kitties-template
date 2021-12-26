@@ -115,18 +115,38 @@ function wartVariation(num) {
     }
 }
 
-function decorationVariation(num) {
-    $('#dnadecoration').html(num)
+function animationSelection(num) {
+    $('#dnaanimation').html(num)
     switch (num) {
-        case 1:
-            $('#decorationName').html('Basic')
-            normaldecoration()
+        case "1":
+            $('#animationName').html('None') //set the badge
+            resetAnimation()
+            break        
+        case "2":
+            $('#animationName').html('Eyes') //set the badge
+            eyeAnimation()
+            break
+        case "3":
+            $('#animationName').html('Tongue') //set the badge
+            tongueAnimation()
             break
     }
 }
 
-async function normalEyes() {
-    await $('.cat__eye').find('span').css('border', 'none')
+async function eyeAnimation() {
+    resetAnimation()
+    $(".frog__eyelid").addClass("blink")
+}
+
+async function tongueAnimation() {
+    resetAnimation()
+    $(".tongue").addClass("lick")
+}
+
+async function resetAnimation() {
+    $(".tongue").removeClass("lick")
+    $(".frog__eyelid").removeClass("blink")
+}
 
 async function normalTongue() {
     await $('.tongue').css('height', '0%')
