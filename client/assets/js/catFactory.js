@@ -39,16 +39,78 @@ function frecklesColor(color,code) {
     $('#dnafreckles').html(code) //This updates the body color part of the DNA that is displayed below the frog
 }
 
+function wartColor(color,code) {
+    console.log(color)
+    $('.frog__wart').css('background', '#' + color)  //This changes the color of the frog's eyes
+    $('#wartsCode').html('code: '+code) //This updates text of the badge next to the slider
+    $('#dnawartsColor').html(code) //This updates the body color part of the DNA that is displayed below the frog
+}
+
 //###################################################
 //Functions below will be used later on in the project
 //###################################################
+function tongueVariation(num) {
+
+    $('#dnatongue').html(num)
+    switch (num) {
+        case "1":
+            normalTongue()
+            $('#tongueName').html('None') //tongue shape label 
+            break;
+        case "2":
+            normalTongue() //function call to reset the eyes 
+            $('#tongueName').html('Small') //eye shape label 
+            smallTongue()
+            break;
+        case "3":
+            normalTongue() //function call to reset the eyes 
+            $('#tongueName').html('Fat') //eye shape label 
+            fatTongue()
+            break;        
+        case "4":
+            normalTongue() //function call to reset the eyes 
+            $('#tongueName').html('Long') //eye shape label 
+            longTongue()
+            break;  
+    }
+}
+
 function eyeVariation(num) {
 
-    $('#dnashape').html(num)
+    $('#dnaeyeShape').html(num)
     switch (num) {
-        case 1:
+        case "1":
             normalEyes()
-            $('#eyeName').html('Basic')
+            $('#eyeShapeName').html('Small') //eye shape label 
+            smallEyes()
+            break;
+        case "2":
+            normalEyes()
+            $('#eyeShapeName').html('Normal') //eye shape label 
+            break;
+        case "3":
+            $('#eyeShapeName').html('Huge') //eye shape label 
+            hugeEyes()
+            break;
+
+    }
+}
+function wartVariation(num) {
+    $('#dnawartShape').html(num)
+    switch (num) {
+        case "1":
+            $('#wartsShapeName').html('None') //set the badge
+            noWarts()
+            break        
+        case "2":
+            $('#wartsShapeName').html('Small') //set the badge
+            noWarts()
+            smallWarts()
+            break
+        case "3":
+            $('#wartsShapeName').html('Large') //set the badge
+            noWarts()
+            largeWarts()
             break
     }
 }
@@ -65,6 +127,25 @@ function decorationVariation(num) {
 
 async function normalEyes() {
     await $('.cat__eye').find('span').css('border', 'none')
+
+async function normalTongue() {
+    await $('.tongue').css('height', '0%')
+    await $('.tongue').css('width', '47%')
+
+}
+
+async function smallTongue() {
+    await $('.tongue').css('height', '70%')
+}
+
+async function fatTongue() {
+    await $('.tongue').css('height', '70%')
+    await $('.tongue').css('width', '80%')
+}
+
+async function longTongue() {
+    await $('.tongue').css('height', '150%')
+    
 }
 
 async function normaldecoration() {
@@ -73,4 +154,45 @@ async function normaldecoration() {
     $('.cat__head-dots').css({ "transform": "rotate(0deg)", "height": "48px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%" })
     $('.cat__head-dots_first').css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "50% 0 50% 50%" })
     $('.cat__head-dots_second').css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
+}
+
+async function normalEyes() {
+    await $('.frog__eye').css('height', '80px')
+    await $('.frog__eye').css('width', '80px')
+    await $('.frog__eye').css('left', '64px')
+    await $('.iris').css('height', '75px')
+    await $('.iris').css('width', '75px')
+}
+
+async function smallEyes() {
+    await $('.frog__eye').css('height', '50px')
+    await $('.frog__eye').css('width', '50px')
+    await $('.frog__eye').css('left', '76px')
+    await $('.iris').css('height', '45px')
+    await $('.iris').css('width', '45px')
+}
+
+async function hugeEyes() {
+    await $('.iris').css('height', '95px')
+    await $('.iris').css('width', '95px')
+    await $('.frog__eye').css('left', '61px')
+    await $('.frog__eye').css('height', '100px')
+    await $('.frog__eye').css('width', '100px')
+}
+
+async function noWarts() {
+    await $('.frog__wart').css('height', '0px')
+    await $('.frog__wart').css('width', '10px')
+    await $('#wart1').css('top','12px')
+}
+
+async function smallWarts() {
+    await $('.frog__wart').css('height', '10px')
+    await $('.frog__wart').css('width', '10px')
+}
+
+async function largeWarts() {
+    await $('.frog__wart').css('height', '20px')
+    await $('.frog__wart').css('width', '20px')
+    await $('#wart1').css('top','21px')
 }

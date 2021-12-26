@@ -29,19 +29,24 @@
                             <div class="frog__freckle" id="freckle2"></div>
                             <div class="frog__freckle" id="freckle3"></div>
                         </div>
+
+                        <div class="frog__warts">
+                            <div class="frog__wart" id="wart1"></div>
+                            <div class="frog__wart" id="wart2"></div>
+                        </div>
                     </div>
                     <div class="frog__eye">
                         <div class="iris">
                             <div class="reflection1"></div>
                             <div class="reflection2"></div>
-                            <div class="frog__eyelid"></div>
+                            <div class="frog__eyelid "></div>
                         </div>
                     </div>
                     <div class="frog__eye right">
                         <div class="iris right">
                             <div class="reflection1"></div>
                             <div class="reflection2"></div>
-                            <div class="frog__eyelid"></div>
+                            <div class="frog__eyelid "></div>
                         </div>
                     </div>
                     <div class="frog__mouth">
@@ -59,11 +64,11 @@
                          <span id="dnafreckles"></span>
                         
                          <!-- Cattributes -->
-                         <span id="dnashape"></span>
-                         <span id="dnadecoration"></span>
-                         <span id="dnadecorationMid"></span>
-                         <span id="dnadecorationSides"></span>
                          <span id="dnadanimation"></span>
+                         <span id="dnatongue"></span>
+                         <span id="dnaeyeShape"></span>
+                         <span id="dnawartShape"></span>
+                         <span id="dnawartsColor"></span>
                          <span id="dnaspecial"></span>
                     </b>
                 </div>
@@ -80,7 +85,7 @@
                     <input type="range" min="10" max="98" class="form-control-range" id="mouthcolor">
                 </div>
                 <div class="form-group">
-                    <label for="formControlRange"><b>Eyes</b><span class="badge badge-dark ml-2" id="eyecode"></span></label>
+                    <label for="formControlRange"><b>Eye Color</b><span class="badge badge-dark ml-2" id="eyecode"></span></label>
                     <input type="range" min="10" max="98" class="form-control-range" id="eyecolor">
                 </div>
                 <div class="form-group">
@@ -91,8 +96,26 @@
                 <!-- Frog Shapes -->
 
                 <div class="form-group">
+                    <label for="formControlRange"><b>Tongue Shape</b><span class="badge badge-dark ml-2" id="tongueName"></span></label>
+                    <input type="range" min="1" max="4" class="form-control-range" id="tongueShape">
                 </div>
 
+                <div class="form-group">
+                    <label for="formControlRange"><b>Eye Shape</b><span class="badge badge-dark ml-2" id="eyeShapeName"></span></label>
+                    <input type="range" min="1" max="3" class="form-control-range" id="eyeShape">
+                </div>
+
+                <div class="form-group">
+                    <label for="formControlRange"><b>Warts</b><span class="badge badge-dark ml-2" id="wartsShapeName"></span></label>
+                    <input type="range" min="1" max="3" class="form-control-range" id="wartShape">
+                </div>
+
+                <div class="form-group">
+                    <label for="formControlRange"><b>Warts Color</b><span class="badge badge-dark ml-2" id="wartsCode"></span></label>
+                    <input type="range" min="10" max="98" class="form-control-range" id="wartColor">
+                </div>
+
+                
             </div>
 
             </div>

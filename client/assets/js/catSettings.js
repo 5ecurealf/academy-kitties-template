@@ -5,13 +5,13 @@ var defaultDNA = {
     "headColor" : 10,
     "mouthColor" : 13,
     "eyesColor" : 96,
-    "eyesShape" : 1,
     "freckleColor" : 10,
     //attributes
-    "decorationPattern" : 1,
-    "decorationMidcolor" : 13,
-    "decorationSidescolor" : 13,
     "animation" :  1,
+    "tongueShape" : "2",
+    "eyeShape" : "2",
+    "wartsShape" : "1",
+    "wartColor" : 13,
     "lastNum" :  1
     }
 
@@ -22,12 +22,11 @@ $( document ).ready(function() {
   $('#dnaeyes').html(defaultDNA.eyesColor);
   $('#dnafreckles').html(defaultDNA.freckleColor);
     
-//   $('#dnashape').html(defaultDNA.eyesShape)
-//   $('#dnadecoration').html(defaultDNA.decorationPattern)
-//   $('#dnadecorationMid').html(defaultDNA.decorationMidcolor)
-//   $('#dnadecorationSides').html(defaultDNA.decorationSidescolor)
-//   $('#dnaanimation').html(defaultDNA.animation)
-//   $('#dnaspecial').html(defaultDNA.lastNum)
+  $('#dnatongue').html(defaultDNA.tongueShape)
+  $('#dnaeyeShape').html(defaultDNA.eyeShape)
+  $('#dnawartShape').html(defaultDNA.wartsShape)
+  $('#dnawartsColor').html(defaultDNA.wartColor)
+  $('#dnaspecial').html(defaultDNA.lastNum)
 
   renderCat(defaultDNA)
 });
@@ -37,11 +36,11 @@ function getDna(){
     dna += $('#dnahead').html()
     dna += $('#dnamouth').html()
     dna += $('#dnaeyes').html()
-    dna += $('#dnashape').html()
     dna += $('#dnafreckles').html()
-    dna += $('#dnadecoration').html()
-    dna += $('#dnadecorationMid').html()
-    dna += $('#dnadecorationSides').html()
+    dna += $('#dnatongue').html()
+    dna += $('#dnaeyeShape').html()
+    dna += $('#dnawartsShape').html()
+    dna += $('#dnawartsColor').html()
     dna += $('#dnaanimation').html()
     dna += $('#dnaspecial').html()
 
@@ -49,20 +48,33 @@ function getDna(){
 }
 
 function renderCat(dna){
-    headColor(colors[dna.headColor],dna.headColor)
-    $('#headcolor').val(dna.headColor)
+    headColor(colors[dna.headColor],dna.headColor) //setting headColor default
+    $('#headcolor').val(dna.headColor) //setting slider's default 
 
     mouthColor(colors[dna.mouthColor],dna.mouthColor)
     $('#mouthcolor').val(dna.mouthColor)
 
     eyesColor(colors[dna.eyesColor],dna.eyesColor)
-    $('#eyescolor').val(dna.eyesColor)
+    $('#eyecolor').val(dna.eyesColor)
 
     frecklesColor(colors[dna.freckleColor],dna.freckleColor)
     $('#frecklecolor').val(dna.freckleColor)
+
+    tongueVariation(dna.tongueShape)
+    $('#tongueShape').val(dna.tongueShape)
+    
+    eyeVariation(dna.eyeShape)
+    $('#eyeShape').val(dna.eyeShape)
+
+    wartVariation(dna.wartsShape)
+    $('#wartShape').val(dna.wartsShape)
+
+    wartColor(colors[dna.wartColor],dna.wartColor)
+    $('#wartColor').val(dna.wartColor)
+
 }
 
-// Changing cat colors
+// Changing frog colors
 $('#headcolor').change(()=>{
     var colorVal = $('#headcolor').val()
     headColor(colors[colorVal],colorVal)
@@ -81,5 +93,25 @@ $('#eyecolor').change(()=>{
 $('#frecklecolor').change(()=>{
   var colorVal = $('#frecklecolor').val()
   frecklesColor(colors[colorVal],colorVal)
+})
+
+$('#tongueShape').change(()=>{
+  var shapeVal = $('#tongueShape').val()
+  tongueVariation(shapeVal)
+})
+
+$('#eyeShape').change(()=>{
+  var shapeVal = $('#eyeShape').val()
+  eyeVariation(shapeVal)
+})
+
+$('#wartShape').change(()=>{
+  var shapeVal = $('#wartShape').val()
+  wartVariation(shapeVal)
+})
+
+$('#wartColor').change(()=>{
+  var colorVal = $('#wartColor').val()
+  wartColor(colors[colorVal],colorVal)
 })
 
