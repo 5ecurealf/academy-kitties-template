@@ -178,3 +178,26 @@ footer {
 		transform: translateY(-2560px);
 	}
 }
+
+.tab_navigation{
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+}
+.tab_navigation li{
+    display: inline-block;
+    background: #607d8b87;
+    border-radius: 5px 5px 0px 0px;
+    min-width: 108px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+.tab_navigation li.active,
+.tab_navigation li:hover{
+    background-color: #607d8b;
+}
+.tabcontents{
+    display: none;
+}
+
