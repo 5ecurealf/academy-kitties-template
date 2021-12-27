@@ -195,7 +195,7 @@ async function smallEyes() {
 async function hugeEyes() {
     await $('.iris').css('height', '95px')
     await $('.iris').css('width', '95px')
-    await $('.frog__eye').css('left', '61px')
+    await $('.frog__eye').css('left', '51px')
     await $('.frog__eye').css('height', '100px')
     await $('.frog__eye').css('width', '100px')
 }
