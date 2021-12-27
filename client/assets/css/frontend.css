@@ -201,3 +201,17 @@ footer {
     display: none;
 }
 
+.button{
+    padding: 0px;
+    margin: 0px;
+    background: #607d8b87;
+    border-radius: 5px ;
+    min-width: 108px;
+    text-align: center;
+}
+
+.createFrogButton{
+    margin-left: 200px;
+    background: #11f4a8;
+    box-shadow: #000000;
+}

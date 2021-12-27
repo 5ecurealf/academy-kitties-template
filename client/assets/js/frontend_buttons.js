@@ -9,4 +9,27 @@ $(document).ready(function(){
         $('.tabcontents').hide();
         $('.tabcontents').eq(index).show()
     });
+
+    $('.randomiseFrogButton').click(function(event){
+        
+        var randomDna = {
+         "headColor" : (Math.floor(Math.random()*89) +10), //range 10-100
+         "mouthColor" : (Math.floor(Math.random()*89) +10),
+         "eyesColor" : (Math.floor(Math.random()*89) +10),
+         "freckleColor" : (Math.floor(Math.random()*89) +10), 
+         //attributes
+         "tongueShape" : String(Math.floor(Math.random()*4) +1), //range 1-4
+         "eyeShape" : String(Math.floor(Math.random()*4) +1), //range 1-3
+         "wartsShape" : String(Math.floor(Math.random()*4) +1), //range 1-3
+         "wartColor" : (Math.floor(Math.random()*89) +10), 
+         "animation" :  String(Math.floor(Math.random()*4) +1), 
+         "lastNum" :  (Math.floor(Math.random()*10) +1) //range 1-3
+        }
+        
+        renderCat(randomDna) 
+   });
+
+   $('.defaultFrogButton').click(function(event){
+        renderCat(defaultDNA) 
+    });
 });
