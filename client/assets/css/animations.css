@@ -14,16 +14,18 @@
 }
 
 .lick{
-    animation: lick 1s ease-in-out infinite;
+    animation: lick 0.5s ease-in-out infinite;
 }
 
 @keyframes lick{
-    0%,50%{
-        height: 30px;
-    }
-
-    51%,100%{
-        height: 60px;
-    }
+    0%{
+		height:35px;
+	}
+	50%{
+		height:50px;
+	}
+	100%{
+		height:35px;
+	}
 }
 
