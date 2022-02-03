@@ -98,6 +98,33 @@ contract FroggyContract is IERC721,isOwner{
         emit Transfer(msg.sender, _to, _tokenId);
     }
 
+    function _createFrog(
+        uint256 _genes,
+        uint32 _mumId,
+        uint32 _dadId,
+        uint16 _generation,
+        address _owner
+    ) private returns(uint256){
+
+        Frog memory newFrog = Frog(_genes,
+                                    uint64(block.timestamp),
+                                    _mumId,
+                                    _dadId,
+                                    _generation);
+
+        Frogs.push(newFrog);
+
+        uint256 newTokenId = Frogs.length - 1;
+
+        emit Birth(_owner,newTokenId,_mumId,_dadId,_genes);
+
+        return newTokenId;
+
+    }
+
+    function createFrogGen0(uint256 _genes) public returns(uint256) {
+        return _createFrog(_genes, 0,0,0,msg.sender);
+    }
 
 
 
