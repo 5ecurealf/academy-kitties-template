@@ -131,8 +131,23 @@ contract FroggyContract is IERC721,isOwner{
         return _createFrog(_genes, 0,0,0,msg.sender);
     }
 
-    function getFrogDetails(uint256 tokenId) public view returns(Frog memory ){
-        return Frogs[tokenId];
+    function getFrogDetails(uint256 tokenId) external view returns(
+        uint256 genes,
+        uint64 birthTime,
+        uint32 mumId,
+        uint32 dadId,
+        uint16 generation,
+        address owner)
+    {
+        Frog storage frog = Frogs[tokenId];
+
+        genes = frog.genes;
+        birthTime = frog.birthTime;
+        mumId = frog.mumId;
+        dadId = frog.dadId;
+        generation = frog.generation;
+        owner = frogIndexToOwner[tokenId];        
+        
     }
 
 
