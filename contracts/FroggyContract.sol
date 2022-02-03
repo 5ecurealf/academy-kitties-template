@@ -4,6 +4,9 @@ import "./Owner.sol";
 
 contract FroggyContract is IERC721,isOwner{
 
+    uint32 public GEN0FrogCap = 10;
+    uint32 public GEN0FrogCount;
+
     event Birth(address owner, uint256 tokenId, uint256 mum, uint256 dad, uint256 genes);
 
 
@@ -122,8 +125,14 @@ contract FroggyContract is IERC721,isOwner{
 
     }
 
-    function createFrogGen0(uint256 _genes) public returns(uint256) {
+    function createFrogGen0(uint256 _genes) public onlyOwner returns(uint256) {
+        require(GEN0FrogCount<=GEN0FrogCap, "Max limit of 10 Gen0 Frogs created");
+        GEN0FrogCount++;
         return _createFrog(_genes, 0,0,0,msg.sender);
+    }
+
+    function getFrogDetails(uint256 tokenId) public view returns(Frog memory ){
+        return Frogs[tokenId];
     }
 
 
