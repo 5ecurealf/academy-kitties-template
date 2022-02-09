@@ -32,4 +32,10 @@ $(document).ready(function(){
    $('.defaultFrogButton').click(function(event){
         renderCat(defaultDNA) 
     });
+    
+    $('.createFrogButton').click(function(event){
+        createFrog() 
+        // console.log("button pressed");
+    });
+
 });

@@ -22,3 +22,13 @@ $(document).ready(function(){
         
 });
 
+function createFrog(){
+    var dna = getDna();
+    instance.methods.createFrogGen0(dna).send({},function(error, txHash){
+        if(error){
+            console.log(error);
+        }else{
+            console.log(txHash);
+        }
+    });
+}
