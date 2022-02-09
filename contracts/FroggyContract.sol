@@ -116,8 +116,14 @@ contract FroggyContract is IERC721,isOwner{
                                     _generation);
 
         Frogs.push(newFrog);
-
         uint256 newTokenId = Frogs.length - 1;
+        frogIndexToOwner[newTokenId] = _owner;
+        ownershipTokenCount[_owner] ++;
+
+
+
+
+        
 
         emit Birth(_owner,newTokenId,_mumId,_dadId,_genes);
 
