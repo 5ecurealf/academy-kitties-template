@@ -16,6 +16,34 @@ $(document).ready(function(){
         window.ethereum.enable().then(function(accounts){
             instance = new web3.eth.Contract(abi, contractAddress, {from: accounts[0]});
             console.log(instance);
+
+            // instance.methods.createFrogGen0(1).send({},function(error, txHash){
+            //     if(error){
+            //         console.log(error);
+            //     }else{
+            //         console.log(txHash);
+            //     }
+            // });
+
+            instance.events.Birth({}, function(error, event){ 
+                // console.log('event.returnValues');
+                // console.log(event.returnValues);
+                var string = "";
+                string += 'Owner: '
+                string+= event.returnValues[0]
+                string += ', tokenId: '
+                string+= event.returnValues[1]
+                string += ', mum: '
+                string+= event.returnValues[2]
+                string += ', dad: '
+                string+= event.returnValues[3]
+                string += ', genes: '
+                string+= event.returnValues[4]
+                // console.log('string');
+                // console.log(string);
+
+                showSnackBar(string);
+             });
             
         })
 
@@ -32,3 +60,14 @@ function createFrog(){
         }
     });
 }
+
+function showSnackBar(_string) {
+    // Get the snackbar DIV
+    $('#snackbar').html(_string) 
+    var x = document.getElementById("snackbar");
+    // Add the "show" class to DIV
+    x.className = "show";
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
+  }
+
