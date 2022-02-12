@@ -2,6 +2,10 @@ pragma solidity >=0.4.22 <0.9.0;
 import "./IERC721.sol";
 import "./Owner.sol";
 
+interface ERC721TokenReceiver {
+    function onERC721Received(address _operator, address _from, uint256 _tokenId, bytes calldata _data) external returns(bytes4);
+}
+
 contract FroggyContract is IERC721,isOwner{
 
     uint32 public GEN0FrogCap = 10;
@@ -194,6 +198,62 @@ contract FroggyContract is IERC721,isOwner{
     
     function _frogExists(uint _tokenId) private view returns(bool){
         return _tokenId< Frogs.length;
+    }
+
+
+    function transferFrom(address _from, address _to, uint256 _tokenId) external{
+        require(_to != address(0), "recieving contract is not a valid address");
+        require(_to != address(this), "cannot transfer to contract address");
+        require(msg.sender == _from || 
+        OperatorApprovals[ownerOf(_tokenId)][msg.sender] || 
+        msg.sender == FrogIdxToApprovedAddress[_tokenId],
+        "Only the Owner/Operator/Approved address of this token can transfer this token");
+        require(_from == ownerOf(_tokenId), "the _from address stated is not the owner of this token ");
+        require(_frogExists(_tokenId), "token specified does not exist");
+
+        _transfer(_from, _to, _tokenId);
+    }
+
+
+
+    ///  checks if `_to` is a smart contract (code size > 0). If so, it calls
+    ///  `onERC721Received` on `_to` and throws if the return value is not
+    ///  `bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"))`.
+    function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes calldata data) external{
+        _safeTransferFrom(_from,_to,_tokenId,data);
+    }
+
+    function safeTransferFrom(address _from, address _to, uint256 _tokenId) external{
+        _safeTransferFrom(_from,_to,_tokenId,bytes(""));
+    }
+
+    function _safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes calldata data) private{
+        require(msg.sender == ownerOf(_tokenId) || 
+        OperatorApprovals[ownerOf(_tokenId)][msg.sender] || 
+        msg.sender == FrogIdxToApprovedAddress[_tokenId],
+        "Only the Owner/Operator/Approved address of this token can transfer this token");
+
+        require(_from == ownerOf(_tokenId), "the _from address stated is not the owner of this token ");
+
+        require(_to != address(0), "recieving contract is not a valid address");
+
+        require(_frogExists(_tokenId), "token specified does not exist");
+
+        _transfer(_from, _to, _tokenId);   
+
+        if(_isContract(_to)){
+            //do external call onERC721Received on the smart contract
+            ERC721TokenReceiver xContract = ERC721TokenReceiver(_to);
+            xContract.onERC721Received(msg.sender,_from,_tokenId,data);
+        }
+    }
+
+    function _isContract(address _addr) private returns (bool isContract){
+        uint32 size;
+        assembly {
+            size := extcodesize(_addr)
+        }
+        return (size > 0);
     }
 
 }   
