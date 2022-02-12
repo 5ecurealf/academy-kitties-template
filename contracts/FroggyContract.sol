@@ -94,7 +94,8 @@ contract FroggyContract is IERC721,isOwner{
         frogIndexToOwner[_tokenId] = _to;
 
         if(_from != address(0)){
-            ownershipTokenCount[_from] --;    
+            ownershipTokenCount[_from] --;   
+            delete FrogIdxToApprovedAddress[_tokenId];
         }
 
         // Emit the transfer event.
@@ -167,11 +168,13 @@ contract FroggyContract is IERC721,isOwner{
 
         require(msg.sender == ownerOf(_tokenId) || 
         OperatorApprovals[ownerOf(_tokenId)][msg.sender],
-         "Only the owner or operator of this token can approve another address");
+        "Only the owner or operator of this token can approve another address");
         
         require(msg.sender != _approved, "Can't approve yourself");
 
         FrogIdxToApprovedAddress[_tokenId] = _approved;
+
+        emit Approval(ownerOf(_tokenId), _approved, _tokenId);
     }
 
     function setApprovalForAll(address _operator, bool _approved) external{
