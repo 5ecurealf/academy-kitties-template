@@ -60,7 +60,7 @@ contract FroggyContract is IERC721,isOwner{
      * - `tokenId` must exist.
      */
     function ownerOf(uint256 tokenId) public view returns (address owner){
-        require(tokenId<= Frogs.length, "Token does not exist");
+        require(_frogExists(tokenId), "Token does not exist");
         return frogIndexToOwner[tokenId];
     }
      /* @dev Transfers `tokenId` token from `msg.sender` to `to`.
@@ -137,6 +137,8 @@ contract FroggyContract is IERC721,isOwner{
         return _createFrog(_genes, 0,0,0,msg.sender);
     }
 
+   
+    
     function getFrogDetails(uint256 tokenId) external view returns(
         uint256 genes,
         uint64 birthTime,
@@ -156,6 +158,39 @@ contract FroggyContract is IERC721,isOwner{
         
     }
 
+    mapping (address => mapping (address => bool)) OperatorApprovals;
+    mapping (uint256 => address) FrogIdxToApprovedAddress;
 
+    function approve(address _approved, uint256 _tokenId) external {
+        
+        require(_frogExists(_tokenId),"Frog does not exist");
 
-}
+        require(msg.sender == ownerOf(_tokenId) || 
+        OperatorApprovals[ownerOf(_tokenId)][msg.sender],
+         "Only the owner or operator of this token can approve another address");
+        
+        require(msg.sender != _approved, "Can't approve yourself");
+
+        FrogIdxToApprovedAddress[_tokenId] = _approved;
+    }
+
+    function setApprovalForAll(address _operator, bool _approved) external{
+        require(msg.sender != _operator, "Cannot set yourself as an operator ");
+        OperatorApprovals[msg.sender][_operator] = _approved;
+        emit ApprovalForAll(msg.sender, _operator, _approved);
+    }
+
+    function getApproved(uint256 _tokenId) external view returns(address){
+        require(_frogExists(_tokenId),"token ID provided is not a valid NFT");
+        return FrogIdxToApprovedAddress[_tokenId];
+    }
+
+    function isApprovedForAll(address _owner, address _operator) external view returns (bool){
+        return OperatorApprovals[_owner][_operator];
+    }
+    
+    function _frogExists(uint _tokenId) private view returns(bool){
+        return _tokenId< Frogs.length;
+    }
+
+}   
