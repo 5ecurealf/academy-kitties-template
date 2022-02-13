@@ -1,23 +1,28 @@
 pragma solidity >=0.4.22 <0.9.0;
 import "./IERC721.sol";
+import "./IERC165.sol";
 import "./Owner.sol";
 
-interface ERC721TokenReceiver {
+interface IERC721TokenReceiver {
     function onERC721Received(address _operator, address _from, uint256 _tokenId, bytes calldata _data) external returns(bytes4);
 }
 
-contract FroggyContract is IERC721,isOwner{
+
+contract FroggyContract is IERC721,IERC165,isOwner{
 
     bytes4 constant MAGIC_NUMBER = bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"));
+    // _interface_id's are generated from the hashing of all IERC721 or IERC165 functions within the contract
+    // these hashes are constant as all token standard contracts will output the same hash 
+    bytes4 private constant _INTERFACE_ID_ERC721 = 0x80ac58cd;
+    bytes4 private constant _INTERFACE_ID_ERC165 = 0x01ffc9a7;
+
+    string private constant _name = "ALFROGS";
+    string private constant _symbol = "ALF";
 
     uint32 public GEN0FrogCap = 10;
     uint32 public GEN0FrogCount;
 
     event Birth(address owner, uint256 tokenId, uint256 mum, uint256 dad, uint256 genes);
-
-
-    string private constant _name = "ALFROGS";
-    string private constant _symbol = "ALF";
 
     struct Frog {
         uint256 genes;
@@ -29,10 +34,17 @@ contract FroggyContract is IERC721,isOwner{
 
     Frog[] Frogs;
 
-
     mapping (uint256 => address) public frogIndexToOwner;
     mapping (address => uint256) ownershipTokenCount;
 
+    mapping (address => mapping (address => bool)) OperatorApprovals;
+    mapping (uint256 => address) FrogIdxToApprovedAddress;
+    /**
+     * @dev Returns whether contract supports _interfaceId. 
+     */
+    function supportsInterface(bytes4 _interfaceId) public view returns(bool){
+        return _interfaceId == _INTERFACE_ID_ERC721 || _interfaceId == _INTERFACE_ID_ERC165;
+    }
 
     /**
      * @dev Returns the number of tokens in ``owner``'s account.
@@ -127,11 +139,6 @@ contract FroggyContract is IERC721,isOwner{
         frogIndexToOwner[newTokenId] = _owner;
         ownershipTokenCount[_owner] ++;
 
-
-
-
-        
-
         emit Birth(_owner,newTokenId,_mumId,_dadId,_genes);
 
         return newTokenId;
@@ -164,9 +171,6 @@ contract FroggyContract is IERC721,isOwner{
         owner = frogIndexToOwner[tokenId];        
         
     }
-
-    mapping (address => mapping (address => bool)) OperatorApprovals;
-    mapping (uint256 => address) FrogIdxToApprovedAddress;
 
     function approve(address _approved, uint256 _tokenId) external {
         
@@ -240,7 +244,7 @@ contract FroggyContract is IERC721,isOwner{
             return true;
         }else{
             //do external call onERC721Received on the smart contract
-            bytes4 returnedData = ERC721TokenReceiver(_to).onERC721Received(msg.sender,_from,_tokenId,_data);
+            bytes4 returnedData = IERC721TokenReceiver(_to).onERC721Received(msg.sender,_from,_tokenId,_data);
             return returnedData == MAGIC_NUMBER;
         }
     }
