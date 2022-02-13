@@ -39,10 +39,24 @@ contract FroggyContract is IERC721,IERC165,isOwner{
 
     mapping (address => mapping (address => bool)) OperatorApprovals;
     mapping (uint256 => address) FrogIdxToApprovedAddress;
+
+    function breed(uint32 _dadId,uint32 _mumId) public{
+        require(msg.sender == ownerOf(_dadId) && msg.sender == ownerOf(_mumId), "You don't own or have persmission to breed these cats");
+        
+        (uint256 dadDNA,,,,uint16 dadGen,) = getFrogDetails(_dadId);
+        (uint256 mumDNA,,,,uint16 mumGen,) = getFrogDetails(_mumId);
+
+        uint256 newDna = _mixDna(dadDNA,mumDNA); 
+        uint16 newGeneration = _calculateGen(dadGen,mumGen);
+
+        _createFrog(newDna,_mumId,_dadId,newGeneration,msg.sender);
+        
+    }
+
     /**
      * @dev Returns whether contract supports _interfaceId. 
      */
-    function supportsInterface(bytes4 _interfaceId) public view returns(bool){
+    function supportsInterface(bytes4 _interfaceId) public pure returns(bool){
         return _interfaceId == _INTERFACE_ID_ERC721 || _interfaceId == _INTERFACE_ID_ERC165;
     }
 
@@ -120,7 +134,7 @@ contract FroggyContract is IERC721,IERC165,isOwner{
         emit Transfer(msg.sender, _to, _tokenId);
     }
 
-    function _createFrog(
+    function _createFrog(        
         uint256 _genes,
         uint32 _mumId,
         uint32 _dadId,
@@ -153,7 +167,7 @@ contract FroggyContract is IERC721,IERC165,isOwner{
 
    
     
-    function getFrogDetails(uint256 tokenId) external view returns(
+    function getFrogDetails(uint256 tokenId) public view returns(
         uint256 genes,
         uint64 birthTime,
         uint32 mumId,
@@ -256,6 +270,24 @@ contract FroggyContract is IERC721,IERC165,isOwner{
             size := extcodesize(_addr)
         }
         return (size > 0);
+    }
+
+    function _mixDna(uint256 _dadDna, uint256 _mumDna) internal pure returns(uint256){
+
+        //11 22 33 44 55 66 77 88 
+        //12 34 45 56 67 78 89 01
+        uint256 dadHalf = _dadDna / 100000000;
+        uint256 mumHalf = _mumDna % 100000000;
+        return (100000000 * dadHalf) + mumHalf;
+    }
+
+    function _calculateGen(uint16 _dadGen, uint16 _mumGen) private pure returns(uint16){
+        //this function makes sure if breeding with higher generation number, the offspring will become lower generation
+        if(_dadGen == 0 && _mumGen == 0 ){
+            return 1;
+        }else{
+            return (_dadGen + _mumGen + 1) / 2;
+        }
     }
 
 }   
