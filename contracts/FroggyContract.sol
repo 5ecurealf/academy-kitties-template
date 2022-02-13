@@ -8,6 +8,8 @@ interface ERC721TokenReceiver {
 
 contract FroggyContract is IERC721,isOwner{
 
+    bytes4 constant MAGIC_NUMBER = bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"));
+
     uint32 public GEN0FrogCap = 10;
     uint32 public GEN0FrogCount;
 
@@ -219,27 +221,28 @@ contract FroggyContract is IERC721,isOwner{
     ///  checks if `_to` is a smart contract (code size > 0). If so, it calls
     ///  `onERC721Received` on `_to` and throws if the return value is not
     ///  `bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"))`.
-    function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes memory data) public{
-        transferFrom(_from, _to, _tokenId);
-
-        if(_isContract(_to)){
-            //do external call onERC721Received on the smart contract
-            ERC721TokenReceiver xContract = ERC721TokenReceiver(_to);
-            try xContract.onERC721Received(msg.sender,_from,_tokenId,data){
-            }catch (bytes memory reason) {
-                if (reason.length == 0) {
-                    revert("ERC721: transfer to non ERC721Receiver implementer");
-                } 
-            }
-        }
-    }
-
-    function externalReturn(bytes4 _data) public pure returns (bytes4){
-        return _data;
+    function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes calldata data) public{
+        _safeTransfer(_from, _to, _tokenId, data);
     }
 
     function safeTransferFrom(address _from, address _to, uint256 _tokenId) public{
-        safeTransferFrom(_from,_to,_tokenId,"");
+        _safeTransfer(_from, _to, _tokenId, "");
+    }
+
+    function _safeTransfer(address _from,address _to,uint _tokenId, bytes memory _data) internal {
+        transferFrom(_from, _to, _tokenId);
+        require(_checkERC721Support(_from,_to,_tokenId,_data),"_to address cannot take ERC721 tokens");
+    }
+
+    function _checkERC721Support(address _from, address _to, uint _tokenId, bytes memory _data) internal returns(bool){
+
+        if(!_isContract(_to)){
+            return true;
+        }else{
+            //do external call onERC721Received on the smart contract
+            bytes4 returnedData = ERC721TokenReceiver(_to).onERC721Received(msg.sender,_from,_tokenId,_data);
+            return returnedData == MAGIC_NUMBER;
+        }
     }
 
 
