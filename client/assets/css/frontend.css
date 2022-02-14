@@ -254,3 +254,50 @@ footer {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
   }
+
+header {
+      display:flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 30px 10%;
+      background: #F8F8F8;
+      width: 100%;
+      height: 100px;
+    }
+
+.logo {
+    cursor: pointer;
+    height: 100px;
+    width: 100px;
+}
+
+.nav_links{
+    list-style: none;
+}
+
+.nav_links li{
+    display: inline-block;
+    padding: 0px 20px;
+}
+
+.nav_links li a {
+    transition: all 0.3s ease 0s;
+}
+
+.nav_links li a:hover {
+    color: #11f4a8;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: #11f4a8;
+    padding: 10px;
+  }
+  .grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+  }
