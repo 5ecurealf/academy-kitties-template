@@ -18,3 +18,11 @@
     bottom: 5px;
 
 }
+
+.mini {
+    transform: scale(0.75);
+}
+
+.mini:hover {
+    background-color: black;
+}
