@@ -1,6 +1,8 @@
 
-
-
+// balance = getBalanceof()
+// create balance amount of loops
+// getFroggyDetails.dna
+// set the dna to a variable to pass to createMiniFrog and render miniFrog
 
     $( document ).ready(function() {
         var i;
@@ -28,9 +30,7 @@
 function createMiniFrog(id){
     $(".row").append(
         $('<label>').append(
-            $('<input type="checkbox">').append(
-                $('<span/>', {text: 'Some text'})
-            )
+            $('<input type="checkbox" id="scales" name="scales">')
         ).append(
             $('<div class="col-{breakpoint}-auto mini catBox m-2 light-b-shadow radio miniFrog'+id+'" style="padding-right: 65px;">').append(
                 $(' <div class="frog miniFrog'+id+'">').append(

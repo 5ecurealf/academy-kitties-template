@@ -35,12 +35,12 @@
   }
   
   /* tile STYLES */
-  [type=checkbox] + label {
+  [type=checkbox] + .catBox {
     cursor: pointer;
   }
   
   /* CHECKED STYLES */
-  [type=checkbox]:checked + label {
+  [type=checkbox]:checked + .catBox {
     outline: 2px solid #f00;
     background-color: black;
   }

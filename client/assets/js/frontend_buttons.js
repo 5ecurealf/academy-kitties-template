@@ -35,12 +35,11 @@ $(document).ready(function(){
     
     $('.createFrogButton').click(function(event){
         createFrog() 
-        // console.log("button pressed");
     });
 
-    $("input:checkbox").click(function() {
-        var bol = $("input:checkbox:checked").length >= 2;     
+    $(".container").on('change', 'input:checkbox', function(){
+        var bol = $("input:checkbox:checked").length >= 2;   
         $("input:checkbox").not(":checked").attr("disabled",bol);
-        });
+     });
 
 });
