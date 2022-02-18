@@ -15,8 +15,9 @@ var defaultDNA = {
     "lastNum" :  1
     }
 
-// when page load
+// when page loads
 $( document ).ready(function() {
+  //setting the dna string under the frog image 
   $('#dnahead').html(defaultDNA.headColor);
   $('#dnamouth').html(defaultDNA.mouthColor);
   $('#dnaeyes').html(defaultDNA.eyesColor);
