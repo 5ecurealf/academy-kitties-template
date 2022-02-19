@@ -25,7 +25,7 @@ $( document ).ready(function() {
     
   $('#dnatongue').html(defaultDNA.tongueShape)
   $('#dnaeyeShape').html(defaultDNA.eyeShape)
-  $('#dnawartShape').html(defaultDNA.wartsShape)
+  $('#dnawartsShape').html(defaultDNA.wartsShape)
   $('#dnawartsColor').html(defaultDNA.wartColor)
   $('#dnaanimation').html(defaultDNA.animation)
   $('#dnaspecial').html(defaultDNA.lastNum)
@@ -45,6 +45,9 @@ function getDna(){
     dna += $('#dnawartsColor').html()
     dna += $('#dnaanimation').html()
     dna += $('#dnaspecial').html()
+
+    console.log('dna before parseInt called :', dna);
+    console.log('getDna() returns:', parseInt(dna));
 
     return parseInt(dna)
 }

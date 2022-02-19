@@ -159,7 +159,7 @@ function miniEyeVariation(num,id) {
     }
 }
 function wartVariation(num) {
-    $('#dnawartShape').html(num)
+    $('#dnawartsShape').html(num)
     switch (num) {
         case "1":
             $('#wartsShapeName').html('None') //set the badge
@@ -179,7 +179,7 @@ function wartVariation(num) {
 }
 
 function miniWartVariation(num,id) {
-    $('.miniFrog'+id+'#dnawartShape').html(num)
+    $('.miniFrog'+id+'#dnawartsShape').html(num)
     switch (num) {
         case "1":
             miniNoWarts(id)

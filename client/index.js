@@ -52,6 +52,7 @@ $(document).ready(function(){
 
 function createFrog(){
     var dna = getDna();
+    console.log('creatFrog{getDna() returns}',dna);
     instance.methods.createFrogGen0(dna).send({},function(error, txHash){
         if(error){
             console.log(error);
