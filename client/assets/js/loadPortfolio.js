@@ -3,29 +3,68 @@
 // create balance amount of loops
 // getFroggyDetails.dna
 // set the dna to a variable to pass to createMiniFrog and render miniFrog
+var web3 = new Web3(Web3.givenProvider); 
 
-    $( document ).ready(function() {
-        var i;
-        var item = $(".row")
-        for (i = 0; i < 10; ++i) {
-            var randomDna = {
-                "headColor" : (Math.floor(Math.random()*89) +10), //range 10-100
-                "mouthColor" : (Math.floor(Math.random()*89) +10),
-                "eyesColor" : (Math.floor(Math.random()*89) +10),
-                "freckleColor" : (Math.floor(Math.random()*89) +10), 
-                //attributes
-                "tongueShape" : String(Math.floor(Math.random()*4) +1), //range 1-4
-                "eyeShape" : String(Math.floor(Math.random()*4) +1), //range 1-3
-                "wartsShape" : String(Math.floor(Math.random()*4) +1), //range 1-3
-                "wartColor" : (Math.floor(Math.random()*89) +10), 
-                "animation" :  String(Math.floor(Math.random()*4) +1), 
-                "lastNum" :  (Math.floor(Math.random()*10) +1) //range 1-3
-               }
-            createMiniFrog(i)
-            renderMiniFrog(randomDna,i)
-        }            
+// variable to hold the instance of the contract 
+var instance; 
 
-    });
+var user;
+
+var contractAddress = "0x48A5087FaDa74F40D1AeD4CF769919344Bc9CFD0"; //change contractAddress variable whenever deploying a new instance of the contract
+
+var numberOfFrogs = 0;
+
+$( document ).ready(function() {
+
+    window.ethereum.enable().then(function(accounts){
+        instance = new web3.eth.Contract(abi, contractAddress, {from: accounts[0]});
+        console.log(instance);
+
+        instance.methods.totalSupply().call({},function(error, txHash){
+            if(error){
+                console.log(error);
+            }else{
+                console.log('instanceMethodScopeStart');
+                console.log("totalSupply() call returns txHash:",txHash);
+                console.log('typeof txHash:',typeof txHash);
+                numberOfFrogs = Number(txHash)
+                console.log("Number(txHash) returns:",numberOfFrogs);
+                console.log('type of Number(txhash)',typeof numberOfFrogs);
+                console.log('instanceMethodScopeEnd');
+
+                var i;
+                console.log('window.ethereum scopeStart');
+                console.log(typeof numberOfFrogs);
+                console.log(numberOfFrogs);
+                console.log('window.ethereum scopeEnd');
+                var item = $(".row")
+                for (i = 0; i < numberOfFrogs; ++i) {
+                    var randomDna = {
+                        "headColor" : (Math.floor(Math.random()*89) +10), //range 10-100
+                        "mouthColor" : (Math.floor(Math.random()*89) +10),
+                        "eyesColor" : (Math.floor(Math.random()*89) +10),
+                        "freckleColor" : (Math.floor(Math.random()*89) +10), 
+                        //attributes
+                        "tongueShape" : String(Math.floor(Math.random()*4) +1), //range 1-4
+                        "eyeShape" : String(Math.floor(Math.random()*4) +1), //range 1-3
+                        "wartsShape" : String(Math.floor(Math.random()*4) +1), //range 1-3
+                        "wartColor" : (Math.floor(Math.random()*89) +10), 
+                        "animation" :  String(Math.floor(Math.random()*4) +1), 
+                        "lastNum" :  (Math.floor(Math.random()*10) +1) //range 1-3
+                        }
+                    createMiniFrog(i)
+                    renderMiniFrog(randomDna,i)
+                    
+                }  
+            }
+        });
+
+
+ 
+        
+    })         
+
+});
 
 function createMiniFrog(id){
     $(".row").append(
@@ -111,4 +150,11 @@ function renderMiniFrog(dna,id){
     miniEyeVariation(dna.eyeShape,id)
     miniWartVariation(dna.wartsShape,id)
     animationSelection(dna.animation,id)
+}
+
+
+// web3 functions 
+
+function getAmountFrogsOwned(){
+
 }
