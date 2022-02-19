@@ -24,38 +24,9 @@ $( document ).ready(function() {
             if(error){
                 console.log(error);
             }else{
-                console.log('instanceMethodScopeStart');
-                console.log("totalSupply() call returns txHash:",txHash);
-                console.log('typeof txHash:',typeof txHash);
                 numberOfFrogs = Number(txHash)
-                console.log("Number(txHash) returns:",numberOfFrogs);
-                console.log('type of Number(txhash)',typeof numberOfFrogs);
-                console.log('instanceMethodScopeEnd');
-
-                var i;
-                console.log('window.ethereum scopeStart');
-                console.log(typeof numberOfFrogs);
                 console.log(numberOfFrogs);
-                console.log('window.ethereum scopeEnd');
-                var item = $(".row")
-                for (i = 0; i < numberOfFrogs; ++i) {
-                    var randomDna = {
-                        "headColor" : (Math.floor(Math.random()*89) +10), //range 10-100
-                        "mouthColor" : (Math.floor(Math.random()*89) +10),
-                        "eyesColor" : (Math.floor(Math.random()*89) +10),
-                        "freckleColor" : (Math.floor(Math.random()*89) +10), 
-                        //attributes
-                        "tongueShape" : String(Math.floor(Math.random()*4) +1), //range 1-4
-                        "eyeShape" : String(Math.floor(Math.random()*4) +1), //range 1-3
-                        "wartsShape" : String(Math.floor(Math.random()*4) +1), //range 1-3
-                        "wartColor" : (Math.floor(Math.random()*89) +10), 
-                        "animation" :  String(Math.floor(Math.random()*4) +1), 
-                        "lastNum" :  (Math.floor(Math.random()*10) +1) //range 1-3
-                        }
-                    createMiniFrog(i)
-                    renderMiniFrog(randomDna,i)
-                    
-                }  
+                createMiniFrogs(numberOfFrogs)
             }
         });
 
@@ -152,9 +123,24 @@ function renderMiniFrog(dna,id){
     animationSelection(dna.animation,id)
 }
 
-
-// web3 functions 
-
-function getAmountFrogsOwned(){
-
+function createMiniFrogs(_numberOfFrogs){
+    var i;
+    var item = $(".row")
+    for (i = 0; i < _numberOfFrogs; ++i) {
+        var randomDna = {
+            "headColor" : (Math.floor(Math.random()*89) +10), //range 10-100
+            "mouthColor" : (Math.floor(Math.random()*89) +10),
+            "eyesColor" : (Math.floor(Math.random()*89) +10),
+            "freckleColor" : (Math.floor(Math.random()*89) +10), 
+            //attributes
+            "tongueShape" : String(Math.floor(Math.random()*4) +1), //range 1-4
+            "eyeShape" : String(Math.floor(Math.random()*4) +1), //range 1-3
+            "wartsShape" : String(Math.floor(Math.random()*4) +1), //range 1-3
+            "wartColor" : (Math.floor(Math.random()*89) +10), 
+            "animation" :  String(Math.floor(Math.random()*4) +1), 
+            "lastNum" :  (Math.floor(Math.random()*10) +1) //range 1-3
+            }
+        createMiniFrog(i)
+        renderMiniFrog(randomDna,i)
+    }  
 }
