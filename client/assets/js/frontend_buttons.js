@@ -19,10 +19,10 @@ $(document).ready(function(){
          "freckleColor" : (Math.floor(Math.random()*89) +10), 
          //attributes
          "tongueShape" : String(Math.floor(Math.random()*4) +1), //range 1-4
-         "eyeShape" : String(Math.floor(Math.random()*4) +1), //range 1-3
-         "wartsShape" : String(Math.floor(Math.random()*4) +1), //range 1-3
+         "eyeShape" : String(Math.floor(Math.random()*3) +1), //range 1-3
+         "wartsShape" : String(Math.floor(Math.random()*3) +1), //range 1-3
          "wartColor" : (Math.floor(Math.random()*89) +10), 
-         "animation" :  String(Math.floor(Math.random()*4) +1), 
+         "animation" :  String(Math.floor(Math.random()*3) +1), 
          "lastNum" :  (Math.floor(Math.random()*10) +1) //range 1-3
         }
         

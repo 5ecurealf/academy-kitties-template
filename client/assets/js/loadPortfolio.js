@@ -10,7 +10,7 @@ var instance;
 
 var user;
 
-var contractAddress = "0x6b6829bb8E104906852eC75D9646Eae8F057d830"; //change contractAddress variable whenever deploying a new instance of the contract
+var contractAddress = "0xb2576aE6F1d35478461148f9C4aa1fcd4E701931"; //change contractAddress variable whenever deploying a new instance of the contract
 
 var numberOfFrogs = 0;
 
@@ -153,6 +153,7 @@ function renderMiniFrog(dna,id){
     miniEyeVariation(dna.eyeShape,id)
     miniWartVariation(dna.wartsShape,id)
     miniAnimationSelection(dna.animation,id)
+    miniSpecialNumber(dna.lastNum,id)
 }
 
 function formatDna(_dna){

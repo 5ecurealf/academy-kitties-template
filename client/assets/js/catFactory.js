@@ -225,6 +225,10 @@ function miniAnimationSelection(num,id) {
     }
 }
 
+function miniSpecialNumber(num,id){
+    $('#dnaspecial.miniFrog'+id).html(num)
+}
+
 async function eyeAnimation() {
     resetAnimation()
     $(".frog__eyelid").addClass("blink")
