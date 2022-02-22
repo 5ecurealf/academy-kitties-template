@@ -25,6 +25,7 @@
 
 .mini:hover {
     background-color: black;
+    color: blanchedalmond;
 }
 
   [type=checkbox] { 
@@ -43,6 +44,7 @@
   [type=checkbox]:checked + .catBox {
     outline: 2px solid #f00;
     background-color: black;
+    color: blanchedalmond;
   }
 
 
