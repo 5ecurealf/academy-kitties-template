@@ -10,7 +10,7 @@ var instance;
 
 var user;
 
-var contractAddress = "0xb2576aE6F1d35478461148f9C4aa1fcd4E701931"; //change contractAddress variable whenever deploying a new instance of the contract
+var contractAddress = "0xb530FB3F9a0ab8a8D2E0e78a3c992CFf771Ad79e"; //change contractAddress variable whenever deploying a new instance of the contract
 
 var numberOfFrogs = 0;
 
@@ -38,7 +38,6 @@ async function createMiniFrogs(_numberOfFrogs){
     var i;
     var item = $(".row")
     for (i = 0; i < _numberOfFrogs; ++i) {
-        console.log('iOutsideScope:',i)
         createMiniFrog(i)
         //get the frog DNA and render the frog
          await instance.methods.getFrogDetails(i).call({},function(error, txHash){
@@ -59,7 +58,6 @@ async function createMiniFrogs(_numberOfFrogs){
                 var frogDna = formatDna(frogDnaString)
                 // console.log('frogDnaString:',frogDnaString)
                 // console.log('frogDna:',frogDna)
-                 console.log('iInsideScope:',i)
 
                 //render Frog
                 //createMiniFrog(i)
@@ -72,7 +70,7 @@ async function createMiniFrogs(_numberOfFrogs){
 function createMiniFrog(id){
     $(".row").append(
         $('<label>').append(
-            $('<input type="checkbox" id="scales" name="scales">')
+            $('<input type="checkbox" id="scales" value="'+id+'">')
         ).append(
             $('<div class="col-{breakpoint}-auto mini catBox m-2 light-b-shadow radio miniFrog'+id+'" style="padding-right: 65px;">').append(
                 $(' <div class="frog miniFrog'+id+'">').append(
@@ -170,4 +168,32 @@ function formatDna(_dna){
     "animation" : _dna.slice(13,14), //range 1-4
     "lastNum" :   _dna.slice(14,15)//range 1-10
 	}
+}
+
+
+$(".breedFrogButton").click(function(){
+    var frogIndexes = [];
+    $.each($("input:checkbox:checked"), function(){
+        frogIndexes.push($(this).val());
+    });
+    if(frogIndexes.length == 2){
+        breedFrog(frogIndexes[0],frogIndexes[1])
+        myTimeout = setTimeout(function(){location.reload();}, 10000);
+    }else{
+        alert("You need to select 2 Frogs to breed");
+    }
+    
+    
+    
+});
+
+async function breedFrog(f1,f2){
+    var dna = getDna();
+    await instance.methods.breed(f1,f2).send({},function(error, txHash){
+        if(error){
+            console.log(error);
+        }else{
+            console.log(txHash);
+        }
+    });
 }

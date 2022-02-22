@@ -287,3 +287,20 @@ header {
 .nav_links li a:hover {
     color: #11f4a8;
 }
+
+.breedFrog{
+    margin: auto;
+    width: 60%;
+    
+    padding: 10px;
+}
+
+.breedFrogButton{
+    position: relative;
+    left: 34%;
+    top: 50%;
+    width: 30%;
+    background: #11f4a8;
+    box-shadow: #000000;
+
+}
