@@ -199,12 +199,15 @@ function animationSelection(num) {
     $('#dnaanimation').html(num)
     switch (num) {
         case "1":
+            $('#animationName').html('None') //set the badge
             resetAnimation()
             break        
         case "2":
+            $('#animationName').html('Animate Eyes') //set the badge
             eyeAnimation()
             break
         case "3":
+            $('#animationName').html('Animate Tongue') //set the badge
             tongueAnimation()
             break
     }
