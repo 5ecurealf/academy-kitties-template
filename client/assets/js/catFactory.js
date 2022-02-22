@@ -195,7 +195,22 @@ function miniWartVariation(num,id) {
     }
 }
 
-function animationSelection(num,id) {
+function animationSelection(num) {
+    $('#dnaanimation').html(num)
+    switch (num) {
+        case "1":
+            resetAnimation()
+            break        
+        case "2":
+            eyeAnimation()
+            break
+        case "3":
+            tongueAnimation()
+            break
+    }
+}
+
+function miniAnimationSelection(num,id) {
     $('#dnaanimation.miniFrog'+id).html(num)
     switch (num) {
         case "1":

@@ -10,7 +10,7 @@ var instance;
 
 var user;
 
-var contractAddress = "0x48A5087FaDa74F40D1AeD4CF769919344Bc9CFD0"; //change contractAddress variable whenever deploying a new instance of the contract
+var contractAddress = "0x6b6829bb8E104906852eC75D9646Eae8F057d830"; //change contractAddress variable whenever deploying a new instance of the contract
 
 var numberOfFrogs = 0;
 
@@ -18,24 +18,56 @@ $( document ).ready(function() {
 
     window.ethereum.enable().then(function(accounts){
         instance = new web3.eth.Contract(abi, contractAddress, {from: accounts[0]});
-        console.log(instance);
-
-        instance.methods.totalSupply().call({},function(error, txHash){
+        //console.log(instance);
+        // Web3 call to get the toto
+        instance.methods.balanceOf(accounts[0]).call({},function(error, txHash){
             if(error){
                 console.log(error);
             }else{
                 numberOfFrogs = Number(txHash)
-                console.log(numberOfFrogs);
-                createMiniFrogs(numberOfFrogs)
+                //console.log(numberOfFrogs);
+                createMiniFrogs(numberOfFrogs)               
             }
         });
 
-
- 
-        
     })         
 
 });
+
+async function createMiniFrogs(_numberOfFrogs){
+    var i;
+    var item = $(".row")
+    for (i = 0; i < _numberOfFrogs; ++i) {
+        console.log('iOutsideScope:',i)
+        createMiniFrog(i)
+        //get the frog DNA and render the frog
+         await instance.methods.getFrogDetails(i).call({},function(error, txHash){
+            if(error){
+                //console.log(error);
+            }else{
+                console.log(txHash);
+                // console.log('typeof txhash',typeof txHash);
+                // console.log(txHash.genes);
+                // console.log('typeof txhash.genes',typeof txHash.genes);
+
+                // frogObjects.push(txHash);
+                // console.log('frogObjects[i].genes:',frogObjects[i].genes);
+                // var frogDnaString = frogObjects[i].genes
+
+                //format the data
+                var frogDnaString = txHash.genes
+                var frogDna = formatDna(frogDnaString)
+                // console.log('frogDnaString:',frogDnaString)
+                // console.log('frogDna:',frogDna)
+                 console.log('iInsideScope:',i)
+
+                //render Frog
+                //createMiniFrog(i)
+                renderMiniFrog(frogDna,i)
+            }
+        });
+    }  
+}
 
 function createMiniFrog(id){
     $(".row").append(
@@ -93,16 +125,16 @@ function createMiniFrog(id){
                 $('<div class="dnaDiv miniFrog'+id+'" id="catDNA">').append(
                     $('<b>').append(
                         $('<span>DNA:</span>').append(
-                            $('<span class ="miniFrog'+id+'"id="dnahead">1</span>'),
-                            $('<span class ="miniFrog'+id+'"id="dnamouth">2</span>'),
-                            $('<span class ="miniFrog'+id+'"id="dnaeyes">3</span>'),
-                            $('<span class ="miniFrog'+id+'"id="dnafreckles">1</span>'),
-                            $('<span class ="miniFrog'+id+'"id="dnatongue">2</span>'),
-                            $('<span class ="miniFrog'+id+'"id="dnaeyeShape">3</span>'),
-                            $('<span class ="miniFrog'+id+'"id="dnawartShape">1</span>'),
-                            $('<span class ="miniFrog'+id+'"id="dnawartsColor">2</span>'),
-                            $('<span class ="miniFrog'+id+'"id="dnaanimation">3</span>'),
-                            $('<span class ="miniFrog'+id+'"id="dnaspecial">1</span>')
+                            $('<span class ="miniFrog'+id+'"id="dnahead"></span>'),
+                            $('<span class ="miniFrog'+id+'"id="dnamouth"></span>'),
+                            $('<span class ="miniFrog'+id+'"id="dnaeyes"></span>'),
+                            $('<span class ="miniFrog'+id+'"id="dnafreckles"></span>'),
+                            $('<span class ="miniFrog'+id+'"id="dnatongue"></span>'),
+                            $('<span class ="miniFrog'+id+'"id="dnaeyeShape"></span>'),
+                            $('<span class ="miniFrog'+id+'"id="dnawartsShape"></span>'),
+                            $('<span class ="miniFrog'+id+'"id="dnawartsColor"></span>'),
+                            $('<span class ="miniFrog'+id+'"id="dnaanimation"></span>'),
+                            $('<span class ="miniFrog'+id+'"id="dnaspecial"></span>')
                         )
                     )
                 )
@@ -120,27 +152,21 @@ function renderMiniFrog(dna,id){
     miniTongueVariation(dna.tongueShape,id)
     miniEyeVariation(dna.eyeShape,id)
     miniWartVariation(dna.wartsShape,id)
-    animationSelection(dna.animation,id)
+    miniAnimationSelection(dna.animation,id)
 }
 
-function createMiniFrogs(_numberOfFrogs){
-    var i;
-    var item = $(".row")
-    for (i = 0; i < _numberOfFrogs; ++i) {
-        var randomDna = {
-            "headColor" : (Math.floor(Math.random()*89) +10), //range 10-100
-            "mouthColor" : (Math.floor(Math.random()*89) +10),
-            "eyesColor" : (Math.floor(Math.random()*89) +10),
-            "freckleColor" : (Math.floor(Math.random()*89) +10), 
-            //attributes
-            "tongueShape" : String(Math.floor(Math.random()*4) +1), //range 1-4
-            "eyeShape" : String(Math.floor(Math.random()*4) +1), //range 1-3
-            "wartsShape" : String(Math.floor(Math.random()*4) +1), //range 1-3
-            "wartColor" : (Math.floor(Math.random()*89) +10), 
-            "animation" :  String(Math.floor(Math.random()*4) +1), 
-            "lastNum" :  (Math.floor(Math.random()*10) +1) //range 1-3
-            }
-        createMiniFrog(i)
-        renderMiniFrog(randomDna,i)
-    }  
+function formatDna(_dna){
+	return {
+    "headColor" : _dna.slice(0,2), //range 10-100
+    "mouthColor" : _dna.slice(2,4),//range 10-100
+    "eyesColor" : _dna.slice(4,6),//range 10-100
+    "freckleColor" : _dna.slice(6,8), //range 10-100
+    //attributes
+    "tongueShape" : _dna.slice(8,9), //range 1-4
+    "eyeShape" : _dna.slice(9,10), //range 1-3
+    "wartsShape" : _dna.slice(10,11), //range 1-3
+    "wartColor" : _dna.slice(11,13), //range 10-100
+    "animation" : _dna.slice(13,14), //range 1-4
+    "lastNum" :   _dna.slice(14,15)//range 1-10
+	}
 }
