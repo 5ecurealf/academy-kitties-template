@@ -286,7 +286,7 @@ contract FroggyContract is IERC721,IERC165,isOwner{
         if(_dadGen == 0 && _mumGen == 0 ){
             return 1;
         }else{
-            return (_dadGen + _mumGen + 1) / 2;
+            return (_dadGen + _mumGen + 2) / 2;
         }
     }
 

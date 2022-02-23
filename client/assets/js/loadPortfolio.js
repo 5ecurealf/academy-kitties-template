@@ -10,7 +10,7 @@ var instance;
 
 var user;
 
-var contractAddress = "0xb530FB3F9a0ab8a8D2E0e78a3c992CFf771Ad79e"; //change contractAddress variable whenever deploying a new instance of the contract
+var contractAddress = "0xF184cE5bE38db02c82ff9516A126a98de4a45C13"; //change contractAddress variable whenever deploying a new instance of the contract
 
 var numberOfFrogs = 0;
 
@@ -29,6 +29,10 @@ $( document ).ready(function() {
                 createMiniFrogs(numberOfFrogs)               
             }
         });
+
+        instance.events.Birth({}, function(error, event){ 
+            setTimeout(function(){location.reload();},2000);
+         });
 
     })         
 
@@ -178,7 +182,7 @@ $(".breedFrogButton").click(function(){
     });
     if(frogIndexes.length == 2){
         breedFrog(frogIndexes[0],frogIndexes[1])
-        myTimeout = setTimeout(function(){location.reload();}, 10000);
+        //setTimeout(function(){location.reload();}, 10000);
     }else{
         alert("You need to select 2 Frogs to breed");
     }
@@ -197,3 +201,15 @@ async function breedFrog(f1,f2){
         }
     });
 }
+
+
+function showSnackBar(_string) {
+    // Get the snackbar DIV
+    $('#snackbar').html(_string) 
+    var x = document.getElementById("snackbar");
+    // Add the "show" class to DIV
+    x.className = "show";
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
+  }
+
