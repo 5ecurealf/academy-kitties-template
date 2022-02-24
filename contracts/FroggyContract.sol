@@ -271,14 +271,73 @@ contract FroggyContract is IERC721,IERC165,isOwner{
         }
         return (size > 0);
     }
+    
+    /*function _mixDna(uint256 _dadDna, uint256 _mumDna) internal view returns(uint256){
 
-    function _mixDna(uint256 _dadDna, uint256 _mumDna) internal pure returns(uint256){
+        uint[8] memory dnaArray;
+        uint8 randomByte = uint8( block.timestamp % 255); //00000000 - 11111111 (0-255)
+        uint8 dnaArrayIdx= 7;
+        uint256 newDna = 0;
 
-        //11 22 33 44 55 66 77 88 
-        //12 34 45 56 67 78 89 01
-        uint256 dadHalf = _dadDna / 100000000;
-        uint256 mumHalf = _mumDna % 100000000;
-        return (100000000 * dadHalf) + mumHalf;
+        for(uint i = 0; i<128; i = i * 2 ){
+            //iterate thru each bit and if ==0 take from dad, if ==1 take from mum
+            if(randomByte & i != 0){
+                //get the last 2 bits of _mumDna 11 22 33 44 55 66 77 88 -> 88                
+                uint mum2Nums = _mumDna % 100;                
+                //append the 2 numbers onto the end of the array
+                dnaArray[dnaArrayIdx] = mum2Nums;
+                //decrease the index of the array 
+                
+            }else{
+                uint dad2Nums = _dadDna % 100;
+                dnaArray[dnaArrayIdx] = dad2Nums;
+            }
+            _mumDna = _mumDna /100;
+            _dadDna = _dadDna /100;
+            dnaArrayIdx--;            
+        }
+
+        for(uint i =0; i<8; i++){
+            newDna = newDna += dnaArray[i];
+            if(i != 7){
+                newDna = newDna * 100;
+            }
+        }
+        return newDna;
+    }
+    */
+
+    function _mixDna(uint256 _dadDna, uint256 _mumDna) public view returns(uint256){
+
+        uint256[8] memory geneArray;
+        uint8 random = uint8( block.timestamp % 255); //00000000 - 11111111 (0-255)
+        uint256 i = 1;
+        uint256 index = 7;
+        for(i = 1; i<=128; i = i * 2 ){
+            //iterate thru each bit and if ==0 take from dad, if ==1 take from mum
+            if(random & i != 0){
+                geneArray[index] = uint8(_mumDna % 100);              
+            }else{
+                geneArray[index] = uint8(_dadDna % 100);
+            }
+            _mumDna = _mumDna /100;
+            _dadDna = _dadDna /100;
+            if(i != 128){
+                index = index - 1;            
+            }
+        }
+        uint256 newGene;
+        for(i =0; i<8; i++){
+            if(i != 7){
+                newGene = newGene + geneArray[i];
+                newGene = newGene * 100;
+            }else{
+                uint8 randSpecial = 10 + (uint8( block.timestamp % 255)/25);
+                newGene = newGene + randSpecial;
+            }
+            
+        }
+        return newGene;
     }
 
     function _calculateGen(uint16 _dadGen, uint16 _mumGen) private pure returns(uint16){

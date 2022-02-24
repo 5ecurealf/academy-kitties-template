@@ -12,7 +12,7 @@ var defaultDNA = {
     "wartsShape" : "1",
     "wartColor" : 13,
     "animation" :  "2",
-    "lastNum" :  1
+    "lastNum" :  10
     }
 
 // when page loads

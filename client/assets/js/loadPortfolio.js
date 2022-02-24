@@ -10,7 +10,7 @@ var instance;
 
 var user;
 
-var contractAddress = "0xF184cE5bE38db02c82ff9516A126a98de4a45C13"; //change contractAddress variable whenever deploying a new instance of the contract
+var contractAddress = "0x542Ed2F7663507E3E332D318eE54bC0b5C5284aa"; //change contractAddress variable whenever deploying a new instance of the contract
 
 var numberOfFrogs = 0;
 
@@ -60,7 +60,6 @@ async function createMiniFrogs(_numberOfFrogs){
                 //format the data
                 var frogDnaString = txHash.genes
                 var frogDna = formatDna(frogDnaString)
-                // console.log('frogDnaString:',frogDnaString)
                 // console.log('frogDna:',frogDna)
 
                 //render Frog
@@ -170,7 +169,7 @@ function formatDna(_dna){
     "wartsShape" : _dna.slice(10,11), //range 1-3
     "wartColor" : _dna.slice(11,13), //range 10-100
     "animation" : _dna.slice(13,14), //range 1-4
-    "lastNum" :   _dna.slice(14,15)//range 1-10
+    "lastNum" :   _dna.slice(14,16)//range 1-10
 	}
 }
 

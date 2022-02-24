@@ -7,7 +7,7 @@ var instance;
 
 var user;
 
-var contractAddress = "0xF184cE5bE38db02c82ff9516A126a98de4a45C13"; //change contractAddress variable whenever deploying a new instance of the contract
+var contractAddress = "0x542Ed2F7663507E3E332D318eE54bC0b5C5284aa"; //change contractAddress variable whenever deploying a new instance of the contract
 
 // use JQuery to check the page has finished loading 
 // when it loads, request user to connect to site, and allow us to interact with the blockchain from their account
