@@ -21,6 +21,7 @@ contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
     
     Offer[] offers;
 
+    mapping(uint256 => Offer) tokenIdToOffer;
 
     
     /*
@@ -30,6 +31,19 @@ contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
     */
     function setfroggyContract(address _froggyContractAddress) public onlyOwner{
         froggyContractAddress = _froggyContractAddress;
+    }
+
+    /**
+    * Get the details about a offer for _tokenId. Throws an error if there is no active offer for _tokenId.
+     */
+    function getOffer(uint256 _tokenId) external view returns ( address seller, uint256 price, uint256 index, uint256 tokenId, bool active){
+        Offer memory offer = tokenIdToOffer[_tokenId];
+        require(offer.active == true, "No active offer for provided token ");
+        seller = offer.seller;
+        price = offer.price;
+        index = offer.index;
+        tokenId = offer.tokenId;
+        active = offer.active;
     }
 
 
