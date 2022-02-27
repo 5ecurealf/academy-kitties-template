@@ -82,7 +82,7 @@ contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
 
         require(!_offerExists(_tokenId),"An offer already exists");
 
-        require(_isOperator(msg.sender,this.address),"Marketplace is not setup as an operator");
+        require(_isOperator(msg.sender,address(this)),"Marketplace is not setup as an operator");
         
         Offer memory newOffer = Offer(_tokenId, msg.sender, _price,0,true);      
         tokenIdToOffer[_tokenId] = newOffer;
@@ -92,7 +92,7 @@ contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
         emit MarketTransaction("Create offer", msg.sender, _tokenId);
     }
 
-    function _isOwner(uint256 _tokenId) private returns (bool) {
+    function _isOwner(uint256 _tokenId) private returns (address) {
         return FroggyContractOwnerOf(froggyContractAddress).ownerOf(_tokenId);
     }
 
