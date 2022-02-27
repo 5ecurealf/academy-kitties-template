@@ -93,15 +93,21 @@ contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
 
     
     /**
-    * Removes an existing offer.
+    * Removes an existing offer.    
     * Emits the MarketTransaction event with txType "Remove offer"
     * Requirement: Only the seller of _tokenId can remove an offer.
      */
     function removeOffer(uint256 _tokenId) external{
+        require(_offerExists(_tokenId),"Token offer does not exist");
         require(msg.sender == tokenIdToOffer[_tokenId].seller,"Only the seller of _tokenId can remove an offer.");
-        delete tokenIdToOffer[_tokenId];
-        emit MarketTransaction("Remove offer", msg.sender,_tokenId);
 
+        uint256 idxOfTokenToDelete = tokenIdToOffer[_tokenId].index;
+        uint256 tokenToMove = tokenIds[tokenIds.length-1];
+        tokenIds[idxOfTokenToDelete] =  tokenToMove;
+        tokenIdToOffer[tokenToMove].index = idxOfTokenToDelete;
+        tokenIds.pop();
+
+        emit MarketTransaction("Remove offer", msg.sender,_tokenId);
     }
 
     // externally called function which proves this contract can handle ERC721 tokens   
