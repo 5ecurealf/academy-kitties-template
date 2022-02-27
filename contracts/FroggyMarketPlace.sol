@@ -27,7 +27,7 @@ contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
         bool active;
     }
     
-    Offer[] offers;
+    uint256[] tokenIds;
 
     mapping(uint256 => Offer) tokenIdToOffer;
 
@@ -46,7 +46,7 @@ contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
      */
     function getOffer(uint256 _tokenId) external view returns ( address seller, uint256 price, uint256 index, uint256 tokenId, bool active){
         Offer memory offer = tokenIdToOffer[_tokenId];
-        require(offer.active == true, "No active offer for provided token ");
+        require(_offerExists(_tokenId) == true, "No active offer for provided token ");
         seller = offer.seller;
         price = offer.price;
         index = offer.index;
@@ -66,30 +66,25 @@ contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
             msg.sender == _isOwner(_tokenId), "Only owner can create an offer to sell the frog" 
         );
 
-        require(_onlyOneOffer(_tokenId),"An offer already exists");
+        require(!_offerExists(_tokenId),"An offer already exists");
 
-        require(_isOperator(msg.sender,this.address),"Marketplace is not setup as an owner");
+        require(_isOperator(msg.sender,this.address),"Marketplace is not setup as an operator");
         
-        Offer memory newOffer = Offer(_tokenId, msg.sender, _price,0,true);
-        offers.push(newOffer);
+        Offer memory newOffer = Offer(_tokenId, msg.sender, _price,0,true);      
+        tokenIdToOffer[_tokenId] = newOffer;
+        tokenIds.push(_tokenId);
+        tokenIdToOffer[_tokenId].index = tokenIds.length - 1;
 
         emit MarketTransaction("Create offer", msg.sender, _tokenId);
-
     }
 
     function _isOwner(uint256 _tokenId) private returns (bool) {
         return FroggyContractOwnerOf(froggyContractAddress).ownerOf(_tokenId);
     }
 
-    function _onlyOneOffer(uint256 _tokenId) view public returns (bool) {
-        uint256 noOfOffers = offers.length;
-
-        for(uint i = 0; i<noOfOffers; i++){
-            if(offers[i].tokenId == _tokenId){
-                return false;
-            }
-        }
-        return true;
+    function _offerExists(uint256 _tokenId) view public returns (bool) {
+        if(tokenIds.length == 0) return false;
+        return (tokenIds[tokenIdToOffer[_tokenId].index] == _tokenId);
     }
 
     function _isOperator(address _owner, address _operator) private returns (bool) {
