@@ -11,6 +11,10 @@ interface FroggyContractisOperator {
     function isApprovedForAll(address _owner, address _operator) external view returns (bool);
 }
 
+interface FroggyContractTransferFrom {
+    function transferFrom(address _from, address _to, uint256 _tokenId) external;
+}
+
 contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
     
     address private froggyContractAddress; 
@@ -123,6 +127,37 @@ contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
 
         emit MarketTransaction("Remove offer", msg.sender,_tokenId);
     }
+
+    /**
+    * Executes the purchase of _tokenId.
+    * Sends the funds to the seller and transfers the token using transferFrom in froggycontract.
+    * Emits the MarketTransaction event with txType "Buy".
+    * Requirement: The msg.value needs to equal the price of _tokenId
+    * Requirement: There must be an active offer for _tokenId
+     */
+    function buyfroggy(uint256 _tokenId) external payable{
+        require(msg.value == _getTokenPrice(_tokenId));
+        require(_offerExists(_tokenId));
+
+        address payable seller = payable(tokenIdToOffer[_tokenId].seller);
+        //delete the frog offer before paying out to prevent RENTRANCY 
+        _boughtRemoveOffer(_tokenId);
+        if(tokenIdToOffer[_tokenId].price > 0){
+            seller.transfer(msg.value);    
+        }
+        //transfer the ownership to buyer         
+        _transferOwnership(seller,msg.sender,_tokenId);
+
+        emit MarketTransaction("Buy", msg.sender, _tokenId);
+    }
+
+                                                                
+    function _getTokenPrice(uint256 _tokenId) private view returns(uint256){
+        return tokenIdToOffer[_tokenId].price;
+    }
+
+    function _boughtRemoveOffer(uint _tokenId) private{
+        require(_offerExists(_tokenId),"Token offer does not exist");
 
         uint256 idxOfTokenToDelete = tokenIdToOffer[_tokenId].index;
         uint256 tokenToMove = tokenIds[tokenIds.length-1];
