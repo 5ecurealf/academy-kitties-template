@@ -13,7 +13,7 @@ interface FroggyContractisOperator {
 
 contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
     
-    address froggyContractAddress; 
+    address private froggyContractAddress; 
 
     constructor(address _froggyContractAddress){
         setfroggyContract(_froggyContractAddress);
@@ -92,7 +92,7 @@ contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
         emit MarketTransaction("Create offer", msg.sender, _tokenId);
     }
 
-    function _isOwner(uint256 _tokenId) private returns (address) {
+    function _isOwner(uint256 _tokenId) private view returns (address) {
         return FroggyContractOwnerOf(froggyContractAddress).ownerOf(_tokenId);
     }
 
@@ -101,7 +101,7 @@ contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
         return (tokenIds[tokenIdToOffer[_tokenId].index] == _tokenId);
     }
 
-    function _isOperator(address _owner, address _operator) private returns (bool) {
+    function _isOperator(address _owner, address _operator) private view returns (bool) {
         return FroggyContractisOperator(froggyContractAddress).isApprovedForAll(_owner, _operator);
     }
 
@@ -111,9 +111,18 @@ contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
     * Emits the MarketTransaction event with txType "Remove offer"
     * Requirement: Only the seller of _tokenId can remove an offer.
      */
-    function removeOffer(uint256 _tokenId) external{
+    function removeOffer(uint256 _tokenId) public {
         require(_offerExists(_tokenId),"Token offer does not exist");
         require(msg.sender == tokenIdToOffer[_tokenId].seller,"Only the seller of _tokenId can remove an offer.");
+        //TODO do I need to delete from the mapping?
+        uint256 idxOfTokenToDelete = tokenIdToOffer[_tokenId].index;
+        uint256 tokenToMove = tokenIds[tokenIds.length-1];
+        tokenIds[idxOfTokenToDelete] =  tokenToMove;
+        tokenIdToOffer[tokenToMove].index = idxOfTokenToDelete;
+        tokenIds.pop();
+
+        emit MarketTransaction("Remove offer", msg.sender,_tokenId);
+    }
 
         uint256 idxOfTokenToDelete = tokenIdToOffer[_tokenId].index;
         uint256 tokenToMove = tokenIds[tokenIds.length-1];
@@ -124,6 +133,10 @@ contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
         emit MarketTransaction("Remove offer", msg.sender,_tokenId);
     }
 
+    function _transferOwnership(address _from, address _to, uint256 _tokenId) private{
+        FroggyContractTransferFrom(froggyContractAddress).transferFrom(_from, _to, _tokenId);
+    }
+    
     // externally called function which proves this contract can handle ERC721 tokens   
     function onERC721Received(address _operator, address _from, uint256 _tokenId, bytes calldata _data) external pure returns(bytes4){
         return bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"));
