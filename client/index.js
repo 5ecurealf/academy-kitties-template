@@ -7,14 +7,14 @@ var instance;
 
 var user;
 
-var contractAddress = "0x542Ed2F7663507E3E332D318eE54bC0b5C5284aa"; //change contractAddress variable whenever deploying a new instance of the contract
+var contractAddress = "0xB02cE0774335aFe9F60Ad9ba6dCd6373f83Aa69c"; //change contractAddress variable whenever deploying a new instance of the contract
 
 // use JQuery to check the page has finished loading 
 // when it loads, request user to connect to site, and allow us to interact with the blockchain from their account
 $(document).ready(function(){
     
         window.ethereum.enable().then(function(accounts){
-            instance = new web3.eth.Contract(abi, contractAddress, {from: accounts[0]});
+            instance = new web3.eth.Contract(abiFrogContract, contractAddress, {from: accounts[0]});
             console.log(instance);
 
             // instance.methods.createFrogGen0(1).send({},function(error, txHash){
@@ -45,15 +45,26 @@ $(document).ready(function(){
                 showSnackBar(string);
              });
             
+             setApprovalForAll()
         })
 
-        
+         
 });
 
 function createFrog(){
     var dna = getDna();
     console.log('creatFrog{getDna() returns}',dna);
     instance.methods.createFrogGen0(dna).send({},function(error, txHash){
+        if(error){
+            console.log(error);
+        }else{
+            console.log(txHash);
+        }
+    });
+}
+
+function setApprovalForAll(){
+    instance.methods.setApprovalForAll('0x596b7E83B97fcf7c62Aa3F09e1201201B7546D46',true).send({},function(error, txHash){
         if(error){
             console.log(error);
         }else{

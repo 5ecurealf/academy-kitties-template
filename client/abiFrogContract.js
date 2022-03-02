@@ -1,4 +1,4 @@
-var abi = [
+var abiFrogContract = [
   {
     "anonymous": false,
     "inputs": [
@@ -515,5 +515,30 @@ var abi = [
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_dadDna",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_mumDna",
+        "type": "uint256"
+      }
+    ],
+    "name": "_mixDna",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
   }
 ];

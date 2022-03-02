@@ -54,7 +54,7 @@
         1785
       ],
       "isOwner": [
-        1843
+        1810
       ]
     },
     "id": 1579,
@@ -81,7 +81,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 1579,
-        "sourceUnit": 1844,
+        "sourceUnit": 1811,
         "src": "34:21:1",
         "symbolAliases": [],
         "unitAlias": ""
@@ -485,7 +485,7 @@
               "id": 1048,
               "name": "isOwner",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 1843,
+              "referencedDeclaration": 1810,
               "src": "515:7:1"
             },
             "id": 1049,
@@ -500,7 +500,7 @@
         "id": 1578,
         "linearizedBaseContracts": [
           1578,
-          1843,
+          1810,
           1785
         ],
         "name": "FroggyMarketPlace",
@@ -953,7 +953,7 @@
                   "id": 1084,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 1842,
+                  "referencedDeclaration": 1809,
                   "src": "1183:9:1"
                 },
                 "nodeType": "ModifierInvocation",
@@ -7279,7 +7279,7 @@
         1785
       ],
       "isOwner": [
-        1843
+        1810
       ]
     },
     "id": 1579,
@@ -7306,7 +7306,7 @@
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
         "scope": 1579,
-        "sourceUnit": 1844,
+        "sourceUnit": 1811,
         "src": "34:21:1",
         "symbolAliases": [],
         "unitAlias": ""
@@ -7710,7 +7710,7 @@
               "id": 1048,
               "name": "isOwner",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 1843,
+              "referencedDeclaration": 1810,
               "src": "515:7:1"
             },
             "id": 1049,
@@ -7725,7 +7725,7 @@
         "id": 1578,
         "linearizedBaseContracts": [
           1578,
-          1843,
+          1810,
           1785
         ],
         "name": "FroggyMarketPlace",
@@ -8178,7 +8178,7 @@
                   "id": 1084,
                   "name": "onlyOwner",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 1842,
+                  "referencedDeclaration": 1809,
                   "src": "1183:9:1"
                 },
                 "nodeType": "ModifierInvocation",
@@ -14491,7 +14491,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-03-01T20:37:34.585Z",
+  "updatedAt": "2022-03-02T19:59:29.225Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
