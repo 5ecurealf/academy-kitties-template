@@ -39,9 +39,9 @@ contract FroggyContract is IERC721,IERC165,isOwner{
 
     mapping (address => mapping (address => bool)) OperatorApprovals;
     mapping (uint256 => address) FrogIdxToApprovedAddress;
-
+    
     function breed(uint32 _dadId,uint32 _mumId) public{
-        require(msg.sender == ownerOf(_dadId) && msg.sender == ownerOf(_mumId), "You don't own or have persmission to breed these cats");
+        require(msg.sender == ownerOf(_dadId) && msg.sender == ownerOf(_mumId), "You don't own or have persmission to breed these frogs");
         
         (uint256 dadDNA,,,,uint16 dadGen,) = getFrogDetails(_dadId);
         (uint256 mumDNA,,,,uint16 mumGen,) = getFrogDetails(_mumId);
@@ -56,32 +56,35 @@ contract FroggyContract is IERC721,IERC165,isOwner{
     /**
      * @dev Returns whether contract supports _interfaceId. 
      */
-    function supportsInterface(bytes4 _interfaceId) public pure returns(bool){
+     //#
+    function supportsInterface(bytes4 _interfaceId) public view returns(bool){
         return _interfaceId == _INTERFACE_ID_ERC721 || _interfaceId == _INTERFACE_ID_ERC165;
     }
 
     /**
      * @dev Returns the number of tokens in ``owner``'s account.
      */
+     
     function balanceOf(address owner) public view returns (uint256 balance){
         return ownershipTokenCount[owner];
     }
     /*
      * @dev Returns the total number of tokens in circulation.
      */
+
     function totalSupply() public view returns (uint256 total){
         return Frogs.length;
     }
     /*
      * @dev Returns the name of the token.
      */
-    function name() public pure returns (string memory tokenName){
+    function name() public view returns (string memory tokenName){
         return _name;
     }
     /*
      * @dev Returns the symbol of the token.
      */
-    function symbol() public pure returns (string memory tokenSymbol){
+    function symbol() public view returns (string memory tokenSymbol){
         return _symbol;
     }
     /**
@@ -91,6 +94,7 @@ contract FroggyContract is IERC721,IERC165,isOwner{
      *
      * - `tokenId` must exist.
      */
+     
     function ownerOf(uint256 tokenId) public view returns (address owner){
         require(_frogExists(tokenId), "Token does not exist");
         return frogIndexToOwner[tokenId];
@@ -106,6 +110,7 @@ contract FroggyContract is IERC721,IERC165,isOwner{
      *
      * Emits a {Transfer} event.
      */
+     
     function transfer(address to, uint256 tokenId) public{
         require(to != address(0), "cannot transfer to zero address");
         require(to != address(this), "cannot transfer to contract address");
@@ -113,7 +118,8 @@ contract FroggyContract is IERC721,IERC165,isOwner{
         
         _transfer(msg.sender, to, tokenId);
     }
-     /* @dev Transfers `tokenId` token from `msg.sender` to `to`.
+
+     /* @dev 
      * Returns true/false is _claimant owns _tokenId
      */
     function _owns(address _claimant, uint256 _tokenId) internal view returns (bool) {
@@ -166,7 +172,7 @@ contract FroggyContract is IERC721,IERC165,isOwner{
     }
 
    
-    
+
     function getFrogDetails(uint256 tokenId) public view returns(
         uint256 genes,
         uint64 birthTime,
@@ -185,7 +191,7 @@ contract FroggyContract is IERC721,IERC165,isOwner{
         owner = frogIndexToOwner[tokenId];        
         
     }
-
+    
     function approve(address _approved, uint256 _tokenId) external {
         
         require(_frogExists(_tokenId),"Frog does not exist");
@@ -201,6 +207,7 @@ contract FroggyContract is IERC721,IERC165,isOwner{
         emit Approval(ownerOf(_tokenId), _approved, _tokenId);
     }
 
+    // enabling/disabling an operator to be able to have control of msg.sender's token 
     function setApprovalForAll(address _operator, bool _approved) external{
         require(msg.sender != _operator, "Cannot set yourself as an operator ");
         OperatorApprovals[msg.sender][_operator] = _approved;
@@ -239,10 +246,10 @@ contract FroggyContract is IERC721,IERC165,isOwner{
     ///  checks if `_to` is a smart contract (code size > 0). If so, it calls
     ///  `onERC721Received` on `_to` and throws if the return value is not
     ///  `bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"))`.
-    function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes calldata data) public{
+    function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes memory data) public{
         _safeTransfer(_from, _to, _tokenId, data);
     }
-
+    
     function safeTransferFrom(address _from, address _to, uint256 _tokenId) public{
         _safeTransfer(_from, _to, _tokenId, "");
     }
@@ -251,9 +258,9 @@ contract FroggyContract is IERC721,IERC165,isOwner{
         transferFrom(_from, _to, _tokenId);
         require(_checkERC721Support(_from,_to,_tokenId,_data),"_to address cannot take ERC721 tokens");
     }
-
+    //check if it's an EOA address or contract address, if it's a contract, check that it can handle ERC721 functions 
     function _checkERC721Support(address _from, address _to, uint _tokenId, bytes memory _data) internal returns(bool){
-
+        
         if(!_isContract(_to)){
             return true;
         }else{

@@ -49,5 +49,5 @@ interface IfroggyMarketPlace {
     * Requirement: The msg.value needs to equal the price of _tokenId
     * Requirement: There must be an active offer for _tokenId
      */
-    function buyfroggy(uint256 _tokenId) external payable;
+    function buyFroggy(uint256 _tokenId) external payable;
 }

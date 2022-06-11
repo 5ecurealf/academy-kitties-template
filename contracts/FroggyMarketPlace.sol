@@ -35,30 +35,16 @@ contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
 
     mapping(uint256 => Offer) tokenIdToOffer;
 
-    
     /*
     * Set the current froggyContract address and initialize the instance of froggycontract.
     * Requirement: Only the contract owner can call.
-    • me: needs to be called in the constructor 
     */
     function setfroggyContract(address _froggyContractAddress) public onlyOwner{
         froggyContractAddress = _froggyContractAddress;
     }
 
     /**
-    * Get the details about a offer for _tokenId. Throws an error if there is no active offer for _tokenId.
-     */
-    function getOffer(uint256 _tokenId) external view returns ( address seller, uint256 price, uint256 index, uint256 tokenId, bool active){
-        require(_offerExists(_tokenId) == true, "No active offer for provided token ");
-        seller = tokenIdToOffer[_tokenId].seller;
-        price = tokenIdToOffer[_tokenId].price;
-        index = tokenIdToOffer[_tokenId].index;
-        tokenId = tokenIdToOffer[_tokenId].tokenId;
-        active = tokenIdToOffer[_tokenId].active;
-    }
-
-    /**
-    * Get all tokenId's that are currently for sale. Returns an empty arror if none exist.
+    * Get all tokenId's that are currently for sale. Returns an empty array if none exist.
      */
     function getAllTokenOnSale() external view  returns(uint256[] memory listOfOffers){
         uint256 noOfOffers = tokenIds.length;
@@ -96,20 +82,18 @@ contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
         emit MarketTransaction("Create offer", msg.sender, _tokenId);
     }
 
-    function _isOwner(uint256 _tokenId) private view returns (address) {
-        return FroggyContractOwnerOf(froggyContractAddress).ownerOf(_tokenId);
+    /**
+    * Get the details about a offer for _tokenId. Throws an error if there is no active offer for _tokenId.
+     */
+    function getOffer(uint256 _tokenId) external view returns ( address seller, uint256 price, uint256 index, uint256 tokenId, bool active){
+        require(_offerExists(_tokenId) == true, "No active offer for provided token ");
+        seller = tokenIdToOffer[_tokenId].seller;
+        price = tokenIdToOffer[_tokenId].price;
+        index = tokenIdToOffer[_tokenId].index;
+        tokenId = tokenIdToOffer[_tokenId].tokenId;
+        active = tokenIdToOffer[_tokenId].active;
     }
 
-    function _offerExists(uint256 _tokenId) view public returns (bool) {
-        if(tokenIds.length == 0) return false;
-        return (tokenIds[tokenIdToOffer[_tokenId].index] == _tokenId);
-    }
-
-    function _isOperator(address _owner, address _operator) private view returns (bool) {
-        return FroggyContractisOperator(froggyContractAddress).isApprovedForAll(_owner, _operator);
-    }
-
-    
     /**
     * Removes an existing offer.    
     * Emits the MarketTransaction event with txType "Remove offer"
@@ -118,13 +102,14 @@ contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
     function removeOffer(uint256 _tokenId) public {
         require(_offerExists(_tokenId),"Token offer does not exist");
         require(msg.sender == tokenIdToOffer[_tokenId].seller,"Only the seller of _tokenId can remove an offer.");
-        //TODO do I need to delete from the mapping?
+        //do I need to delete from the mapping? No because the token is removed from the array, so add check to see if it's in the array to check that it exists
+        //get the idx of the token to remove
         uint256 idxOfTokenToDelete = tokenIdToOffer[_tokenId].index;
+        //get the idx of the last token to replace the one you want to remove
         uint256 tokenToMove = tokenIds[tokenIds.length-1];
         tokenIds[idxOfTokenToDelete] =  tokenToMove;
         tokenIdToOffer[tokenToMove].index = idxOfTokenToDelete;
         tokenIds.pop();
-
         emit MarketTransaction("Remove offer", msg.sender,_tokenId);
     }
 
@@ -135,12 +120,12 @@ contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
     * Requirement: The msg.value needs to equal the price of _tokenId
     * Requirement: There must be an active offer for _tokenId
      */
-    function buyfroggy(uint256 _tokenId) external payable{
+    function buyFroggy(uint256 _tokenId) external payable{
         require(msg.value == _getTokenPrice(_tokenId));
         require(_offerExists(_tokenId));
 
         address payable seller = payable(tokenIdToOffer[_tokenId].seller);
-        //delete the frog offer before paying out to prevent RENTRANCY 
+        //delete the frog offer before paying out to prevent RE-ENTRANCY 
         _boughtRemoveOffer(_tokenId);
         if(tokenIdToOffer[_tokenId].price > 0){
             seller.transfer(msg.value);    
@@ -150,12 +135,25 @@ contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
 
         emit MarketTransaction("Buy", msg.sender, _tokenId);
     }
+    
+    function _isOwner(uint256 _tokenId) private view returns (address) {
+        return FroggyContractOwnerOf(froggyContractAddress).ownerOf(_tokenId);
+    }
+    
+    function _offerExists(uint256 _tokenId) view public returns (bool) {
+        if(tokenIds.length == 0) return false;
+        return (tokenIds[tokenIdToOffer[_tokenId].index] == _tokenId);
+    }
+    
+    function _isOperator(address _owner, address _operator) private view returns (bool) {
+        return FroggyContractisOperator(froggyContractAddress).isApprovedForAll(_owner, _operator);
+    }
 
-                                                                
+                                                             
     function _getTokenPrice(uint256 _tokenId) private view returns(uint256){
         return tokenIdToOffer[_tokenId].price;
     }
-
+    
     function _boughtRemoveOffer(uint _tokenId) private{
         require(_offerExists(_tokenId),"Token offer does not exist");
 
@@ -167,12 +165,12 @@ contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
 
         emit MarketTransaction("Remove offer", msg.sender,_tokenId);
     }
-
+    
     function _transferOwnership(address _from, address _to, uint256 _tokenId) private{
         FroggyContractTransferFrom(froggyContractAddress).transferFrom(_from, _to, _tokenId);
     }
     
-    // externally called function which proves this contract can handle ERC721 tokens   
+    // externally called function which proves this contract can handle ERC721 tokens
     function onERC721Received(address _operator, address _from, uint256 _tokenId, bytes calldata _data) external pure returns(bytes4){
         return bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"));
     }
