@@ -112,6 +112,7 @@ var abiFrogContract = [
     "type": "event"
   },
   {
+    "constant": true,
     "inputs": [],
     "name": "GEN0FrogCap",
     "outputs": [
@@ -121,11 +122,12 @@ var abiFrogContract = [
         "type": "uint32"
       }
     ],
+    "payable": false,
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
+    "constant": true,
     "inputs": [],
     "name": "GEN0FrogCount",
     "outputs": [
@@ -135,11 +137,12 @@ var abiFrogContract = [
         "type": "uint32"
       }
     ],
+    "payable": false,
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
+    "constant": true,
     "inputs": [
       {
         "internalType": "uint256",
@@ -155,11 +158,12 @@ var abiFrogContract = [
         "type": "address"
       }
     ],
+    "payable": false,
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
+    "constant": false,
     "inputs": [
       {
         "internalType": "uint32",
@@ -174,10 +178,12 @@ var abiFrogContract = [
     ],
     "name": "breed",
     "outputs": [],
+    "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
+    "constant": true,
     "inputs": [
       {
         "internalType": "bytes4",
@@ -193,11 +199,12 @@ var abiFrogContract = [
         "type": "bool"
       }
     ],
-    "stateMutability": "pure",
-    "type": "function",
-    "constant": true
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
   },
   {
+    "constant": true,
     "inputs": [
       {
         "internalType": "address",
@@ -213,11 +220,12 @@ var abiFrogContract = [
         "type": "uint256"
       }
     ],
+    "payable": false,
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
+    "constant": true,
     "inputs": [],
     "name": "totalSupply",
     "outputs": [
@@ -227,11 +235,12 @@ var abiFrogContract = [
         "type": "uint256"
       }
     ],
+    "payable": false,
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
+    "constant": true,
     "inputs": [],
     "name": "name",
     "outputs": [
@@ -241,11 +250,12 @@ var abiFrogContract = [
         "type": "string"
       }
     ],
-    "stateMutability": "pure",
-    "type": "function",
-    "constant": true
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
   },
   {
+    "constant": true,
     "inputs": [],
     "name": "symbol",
     "outputs": [
@@ -255,11 +265,12 @@ var abiFrogContract = [
         "type": "string"
       }
     ],
-    "stateMutability": "pure",
-    "type": "function",
-    "constant": true
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
   },
   {
+    "constant": true,
     "inputs": [
       {
         "internalType": "uint256",
@@ -275,11 +286,12 @@ var abiFrogContract = [
         "type": "address"
       }
     ],
+    "payable": false,
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
+    "constant": false,
     "inputs": [
       {
         "internalType": "address",
@@ -294,10 +306,12 @@ var abiFrogContract = [
     ],
     "name": "transfer",
     "outputs": [],
+    "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
+    "constant": false,
     "inputs": [
       {
         "internalType": "uint256",
@@ -313,10 +327,12 @@ var abiFrogContract = [
         "type": "uint256"
       }
     ],
+    "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
+    "constant": true,
     "inputs": [
       {
         "internalType": "uint256",
@@ -357,11 +373,12 @@ var abiFrogContract = [
         "type": "address"
       }
     ],
+    "payable": false,
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
+    "constant": false,
     "inputs": [
       {
         "internalType": "address",
@@ -376,10 +393,12 @@ var abiFrogContract = [
     ],
     "name": "approve",
     "outputs": [],
+    "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
+    "constant": false,
     "inputs": [
       {
         "internalType": "address",
@@ -394,10 +413,12 @@ var abiFrogContract = [
     ],
     "name": "setApprovalForAll",
     "outputs": [],
+    "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
+    "constant": true,
     "inputs": [
       {
         "internalType": "uint256",
@@ -413,11 +434,12 @@ var abiFrogContract = [
         "type": "address"
       }
     ],
+    "payable": false,
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
+    "constant": true,
     "inputs": [
       {
         "internalType": "address",
@@ -438,11 +460,12 @@ var abiFrogContract = [
         "type": "bool"
       }
     ],
+    "payable": false,
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
   },
   {
+    "constant": false,
     "inputs": [
       {
         "internalType": "address",
@@ -462,10 +485,12 @@ var abiFrogContract = [
     ],
     "name": "transferFrom",
     "outputs": [],
+    "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
+    "constant": false,
     "inputs": [
       {
         "internalType": "address",
@@ -485,10 +510,12 @@ var abiFrogContract = [
     ],
     "name": "safeTransferFrom",
     "outputs": [],
+    "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
+    "constant": false,
     "inputs": [
       {
         "internalType": "address",
@@ -513,10 +540,12 @@ var abiFrogContract = [
     ],
     "name": "safeTransferFrom",
     "outputs": [],
+    "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
+    "constant": true,
     "inputs": [
       {
         "internalType": "uint256",
@@ -537,8 +566,29 @@ var abiFrogContract = [
         "type": "uint256"
       }
     ],
+    "payable": false,
     "stateMutability": "view",
-    "type": "function",
-    "constant": true
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_owner",
+        "type": "address"
+      }
+    ],
+    "name": "tokensOfOwner",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "ownerTokens",
+        "type": "uint256[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
   }
 ];
