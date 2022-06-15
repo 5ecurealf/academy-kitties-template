@@ -5,66 +5,76 @@
 // set the dna to a variable to pass to createMiniFrog and render miniFrog
 var web3 = new Web3(Web3.givenProvider); 
 
-// variable to hold the instance of the contract 
-var instance; 
+// variable to hold the froggyContractInstance of the contract 
+var froggyContractInstance; 
+var marketPlaceContractInstance;
 
 var user;
-
-var contractAddress = "0x542Ed2F7663507E3E332D318eE54bC0b5C5284aa"; //change contractAddress variable whenever deploying a new instance of the contract
+// Rinkeby test network 
+// var frogContractAddress = "0x6207497730b1a78ae633D7f0b262ab53457c6644"; //change frogContractAddress variable whenever deploying a new froggyContractInstance of the contract
+// var marketPlaceContractAddress = "0xB4f5E28DADD79fC11ee27A7b96CCaE3408985B0d";
+// 
+var frogContractAddress = "0x284c39b91324d3447Eb8C47AbD2c9e588Dba2312"; //change frogContractAddress variable whenever deploying a new froggyContractInstance of the contract
+var marketPlaceContractAddress = "0x8d96Ae79465C2dF25f381B218a574584C0fa845A";
 
 var numberOfFrogs = 0;
+
+var account;
 
 $( document ).ready(function() {
 
     window.ethereum.enable().then(function(accounts){
-        instance = new web3.eth.Contract(abi, contractAddress, {from: accounts[0]});
-        //console.log(instance);
-        // Web3 call to get the toto
-        instance.methods.balanceOf(accounts[0]).call({},function(error, txHash){
+        // Get contract instances to interact with contracts
+        froggyContractInstance = new web3.eth.Contract(abiFrogContract, frogContractAddress, {from: accounts[0]});
+        marketPlaceContractInstance = new web3.eth.Contract(abiMarketPlaceContract, marketPlaceContractAddress, {from: accounts[0]});
+        
+        // set the accounts variable 
+        account = accounts[0]
+        
+        // Change the "account" variable when the user changes the current account in their metamask wallet
+        window.ethereum.on('accountsChanged', function (accounts) {
+            // Time to reload your interface with accounts[0]!
+            console.log("account set to:",accounts[0])
+            account = accounts[0];
+            window.location.reload();
+        });
+
+        froggyContractInstance.methods.tokensOfOwner(account).call({},function(error, frogArray){
             if(error){
                 console.log(error);
             }else{
-                numberOfFrogs = Number(txHash)
-                //console.log(numberOfFrogs);
-                createMiniFrogs(numberOfFrogs)               
+                console.log("result",frogArray)
+                createMiniFrogs(frogArray)               
             }
         });
 
-        instance.events.Birth({}, function(error, event){ 
-            setTimeout(function(){location.reload();},2000);
+        froggyContractInstance.events.Birth({}, function(error, event){ 
+            // setTimeout(function(){location.reload();},2000);
          });
 
+        isApprovedForAll(account,marketPlaceContractAddress);
     })         
 
 });
 
-async function createMiniFrogs(_numberOfFrogs){
-    var i;
-    var item = $(".row")
-    for (i = 0; i < _numberOfFrogs; ++i) {
-        createMiniFrog(i)
+async function createMiniFrogs(_frogArray){
+
+    for (var i = 0; i < _frogArray.length; ++i) {
+        var frog = _frogArray[i]
+        createMiniFrog(frog)
         //get the frog DNA and render the frog
-         await instance.methods.getFrogDetails(i).call({},function(error, txHash){
+         await froggyContractInstance.methods.getFrogDetails(frog).call({},function(error, txHash){
             if(error){
                 //console.log(error);
             }else{
-                console.log(txHash);
-                // console.log('typeof txhash',typeof txHash);
-                // console.log(txHash.genes);
-                // console.log('typeof txhash.genes',typeof txHash.genes);
-
-                // frogObjects.push(txHash);
-                // console.log('frogObjects[i].genes:',frogObjects[i].genes);
-                // var frogDnaString = frogObjects[i].genes
+                console.log('Creating frog'+frog,txHash);
 
                 //format the data
                 var frogDnaString = txHash.genes
                 var frogDna = formatDna(frogDnaString)
-                // console.log('frogDna:',frogDna)
-
+                console.log('frog'+frog+'dna',frogDna);
                 //render Frog
-                //createMiniFrog(i)
-                renderMiniFrog(frogDna,i)
+                renderMiniFrog(frogDna,_frogArray[i])
             }
         });
     }  
@@ -178,6 +188,7 @@ $(".breedFrogButton").click(function(){
     var frogIndexes = [];
     $.each($("input:checkbox:checked"), function(){
         frogIndexes.push($(this).val());
+        //console.log('typeof frogIndexes[0]',typeof frogIndexes[0]);
     });
     if(frogIndexes.length == 2){
         breedFrog(frogIndexes[0],frogIndexes[1])
@@ -192,7 +203,7 @@ $(".breedFrogButton").click(function(){
 
 async function breedFrog(f1,f2){
     var dna = getDna();
-    await instance.methods.breed(f1,f2).send({},function(error, txHash){
+    await froggyContractInstance.methods.breed(f1,f2).send({},function(error, txHash){
         if(error){
             console.log(error);
         }else{
@@ -209,6 +220,90 @@ function showSnackBar(_string) {
     // Add the "show" class to DIV
     x.className = "show";
     // After 3 seconds, remove the show class from DIV
-    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
+    // setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
   }
 
+async function setOffer(_price){
+    console.log("_price:",_price)
+    var _tokenId = [];
+    $.each($("input:checkbox:checked"), function(){
+        _tokenId.push($(this).val());
+    });
+    if(_tokenId.length == 1){
+        await marketPlaceContractInstance.methods.setOffer(_price,_tokenId[0]).send({},function(error, txHash){
+            if(error){
+                console.log(error);
+            }else{
+                console.log(txHash);
+            }
+        });
+    }else{
+        alert("Select a maximum of 1 Frog to sell");
+    }
+}
+
+async function setApprovalForAll(){
+    console.log("setApprovalForAll() invoked")
+    await froggyContractInstance.methods.setApprovalForAll(marketPlaceContractAddress,true).send({},function(error, txHash){
+        if(error){
+            console.log(error);
+        }else{
+            console.log(txHash);
+        }
+    });
+}
+
+async function isApprovedForAll(_owner,_operator,callback){
+    console.log("isApprovedForAll invoked");
+    await froggyContractInstance.methods.isApprovedForAll(_owner,_operator).call({},function(error, approved){
+        if(error){
+            console.log(error);
+        }else{
+            console.log("Marketplace contract approved?:",approved);
+            console.log('typeof approved',typeof approved);
+            // return approved;
+            if(!approved){
+                setApprovalForAll()
+            }
+            
+        }
+    });
+}
+
+   // ------------Modal----------------
+
+     // Get the modal
+     var modal = document.getElementById("myModal");
+
+     // Get the button that opens the modal
+     var btn = document.getElementById("myBtn");
+     
+     // Get the <span> element that closes the modal
+     var span = document.getElementsByClassName("close")[0];
+     
+     var sellButton = document.getElementById("sellButton");
+     
+     var removeButton = document.getElementById("removeButton");
+     // When the user clicks the button, open the modal 
+     btn.onclick = function() {
+       modal.style.display = "block";
+     }
+     
+     // When the user clicks on <span> (x), close the modal
+     span.onclick = function() {
+       modal.style.display = "none";
+     }
+     
+     // When the user clicks anywhere outside of the modal, close it
+     window.onclick = function(event) {
+       if (event.target == modal) {
+         modal.style.display = "none";
+       }
+     }
+     
+     sellButton.onclick = function() {
+      console.log("sellButton click registered");
+        var x = document.getElementById("priceWei").value;
+        modal.style.display = "none";
+        setOffer(x);
+     }
