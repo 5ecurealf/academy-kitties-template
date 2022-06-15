@@ -7,14 +7,16 @@ var instance;
 
 var user;
 
-var contractAddress = "0xB02cE0774335aFe9F60Ad9ba6dCd6373f83Aa69c"; //change contractAddress variable whenever deploying a new instance of the contract
+// var frogContractAddress = "0x6207497730b1a78ae633D7f0b262ab53457c6644"; //change frogContractAddress variable whenever deploying a new froggyContractInstance of the contract
+var frogContractAddress = "0x284c39b91324d3447Eb8C47AbD2c9e588Dba2312"; //change frogContractAddress variable whenever deploying a new froggyContractInstance of the contract
+
 
 // use JQuery to check the page has finished loading 
 // when it loads, request user to connect to site, and allow us to interact with the blockchain from their account
 $(document).ready(function(){
     
         window.ethereum.enable().then(function(accounts){
-            instance = new web3.eth.Contract(abiFrogContract, contractAddress, {from: accounts[0]});
+            instance = new web3.eth.Contract(abiFrogContract, frogContractAddress, {from: accounts[0]});
             console.log(instance);
 
             // instance.methods.createFrogGen0(1).send({},function(error, txHash){
@@ -45,7 +47,7 @@ $(document).ready(function(){
                 showSnackBar(string);
              });
             
-             setApprovalForAll()
+            //  setApprovalForAll()
         })
 
          
@@ -53,7 +55,7 @@ $(document).ready(function(){
 
 function createFrog(){
     var dna = getDna();
-    console.log('creatFrog{getDna() returns}',dna);
+    console.log('creatFrog{getDna() returns:}',dna);
     instance.methods.createFrogGen0(dna).send({},function(error, txHash){
         if(error){
             console.log(error);
@@ -63,18 +65,18 @@ function createFrog(){
     });
 }
 
-function setApprovalForAll(){
-    instance.methods.setApprovalForAll('0x596b7E83B97fcf7c62Aa3F09e1201201B7546D46',true).send({},function(error, txHash){
-        if(error){
-            console.log(error);
-        }else{
-            console.log(txHash);
-        }
-    });
-}
+// function setApprovalForAll(){
+//     instance.methods.setApprovalForAll('0x8DBA9f8724e21Cc9Ce61dCC079808E330814496A',true).send({},function(error, txHash){
+//         if(error){
+//             console.log(error);
+//         }else{
+//             console.log(txHash);
+//         }
+//     });
+// }
 
 function showSnackBar(_string) {
-    // Get the snackbar DIV
+    // Get the snackbar DIV and change the string to _string argument
     $('#snackbar').html(_string) 
     var x = document.getElementById("snackbar");
     // Add the "show" class to DIV
