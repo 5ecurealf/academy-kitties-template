@@ -8,7 +8,9 @@
   <script src="assets/bootstrap/js/popper.js"></script>
   <script src="assets/bootstrap/js/bootstrap.min.js"></script>
   <script src="assets/js/web3.min.js"></script>
-  <script src="./abi.js"></script>
+  <script src="./abiFrogContract.js"></script>
+  <script src="./abiMarketPlaceContract.js"></script>
+
   
 
   <link rel="stylesheet" href="assets/css/mystyle.css">
@@ -24,9 +26,9 @@
         <img class = "logo" src="./frogLogo.png" alt="logo">
         <nav>
             <ul class="nav_links">
-              <li><a href="./index.html">Factory</a></li>
-              <li><a href="./Portfolio.html">Your Frogs</a></li>
-              <li><a href="./MarketPlace.html">MarketPlace</a></li>
+                <li><a href="./index.html">Factory</a></li>
+                <li><a href="./Portfolio.html">Your Frogs</a></li>
+                <li><a href="./MarketPlace.html">MarketPlace</a></li>
             </ul>
         </nav>
     </header>
@@ -34,9 +36,11 @@
         <div class="row ">
         </div>     
     </div>
-    <div class="order-last breedFrog">
-      <button class="breedFrogButton button ">Breed Frog</button> 
+    <div class="order-last portfolioButtonDiv">
+      <button class="portfolioButton buyFrogButton button ">Buy Frog</button> 
     </div>
+
+
      <!-- Frog tab -->
      <div id="snackbar">Some text </div>
     <footer align="left">
@@ -49,6 +53,6 @@
   <script src="assets/js/catSettings.js"></script>
   <script src="assets/js/catFactory.js"></script>
   <script src="assets/js/frontend_buttons.js"></script>
-  <script src="assets/js/loadPortfolio.js"></script>
+  <script src="assets/js/loadMarketPlace.js"></script>
 
 </html>
