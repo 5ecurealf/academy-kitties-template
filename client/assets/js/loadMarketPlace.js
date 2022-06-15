@@ -231,6 +231,23 @@ async function buyFrog(_tokenId,_price){
     });
 }
 
+async function removeOffer(){
+    var _tokenId = [];
+    $.each($("input:checkbox:checked"), function(){
+        _tokenId.push($(this).val());
+    });
+    if(_tokenId.length == 1){
+        await marketPlaceContractInstance.methods.removeOffer(_tokenId[0]).send({from:account},function(error, txHash){
+            if(error){
+                console.log(error);
+            }else{
+                console.log(txHash);
+            }
+        });
+    }else{
+        alert("Select an offer to remove");
+    }
+}
 
 
 function showSnackBar(_string) {
@@ -257,3 +274,42 @@ function toWei(_priceETH){
 }
 
 
+   // ------------Modal----------------
+
+     // Get the modal
+     var modal = document.getElementById("myModal");
+
+     // Get the button that opens the modal
+     var btn = document.getElementById("myBtn");
+     
+     // Get the <span> element that closes the modal
+     var span = document.getElementsByClassName("close")[0];
+     
+     var sellButton = document.getElementById("sellButton");
+     
+     var removeButton = document.getElementById("removeButton");
+     // When the user clicks the button, open the modal 
+     btn.onclick = function() {
+       modal.style.display = "block";
+     }
+     
+     // When the user clicks on <span> (x), close the modal
+     span.onclick = function() {
+       modal.style.display = "none";
+     }
+     
+     // When the user clicks anywhere outside of the modal, close it
+     window.onclick = function(event) {
+       if (event.target == modal) {
+         modal.style.display = "none";
+       }
+     }
+
+     removeButton.onclick = function() {
+      console.log("removeButton click registered");
+        modal.style.display = "none";
+        removeOffer();
+     }
+
+
+     //---------------------------------
