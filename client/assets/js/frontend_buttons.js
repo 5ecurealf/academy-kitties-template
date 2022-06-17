@@ -41,4 +41,52 @@ $(document).ready(function(){
         var bol = $("input:checkbox:checked").length >= 2;   
         $("input:checkbox").not(":checked").attr("disabled",bol);
      });
+
+
+    // <------- Portfolio Page ------->
+
+    // breed button
+    $(".breedFrogButton").click(function(){
+        var frogIndexes = [];
+        $.each($("input:checkbox:checked"), function(){
+            frogIndexes.push($(this).val());
+            //console.log('typeof frogIndexes[0]',typeof frogIndexes[0]);
+        });
+        if(frogIndexes.length == 2){
+            breedFrog(frogIndexes[0],frogIndexes[1])
+            //setTimeout(function(){location.reload();}, 10000);
+        }else{
+            alert("You need to select 2 Frogs to breed");
+        }
+        
+        
+        
+    });
+
+    // <------- MarketPlace Page ------->
+
+    // buyfrog button
+    $(".buyFrogButton").click(function(){
+        var frogIndexes = [];
+        var priceString
+        $.each($("input:checkbox:checked"), function(){
+            frogIndexes.push($(this).val());
+            var strings = $('#price'+frogIndexes[0]+'').text()
+            priceString = strings.split(" ")[1]
+        });
+        if(frogIndexes.length == 1){
+            buyFrog(frogIndexes[0],priceString);
+        }else{
+            alert("Select a frog single to buy ");
+        }
+    });
+
+    // <------- Other ------->
+    // open Modal button Portfolio.setOffer Marketplace.removeOffer
+    $("#myBtn").click(function(){
+        modal.style.display = "block";    
+    });
+
+
+
 });     

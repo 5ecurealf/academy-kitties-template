@@ -183,24 +183,6 @@ function formatDna(_dna){
 	}
 }
 
-
-$(".breedFrogButton").click(function(){
-    var frogIndexes = [];
-    $.each($("input:checkbox:checked"), function(){
-        frogIndexes.push($(this).val());
-        //console.log('typeof frogIndexes[0]',typeof frogIndexes[0]);
-    });
-    if(frogIndexes.length == 2){
-        breedFrog(frogIndexes[0],frogIndexes[1])
-        //setTimeout(function(){location.reload();}, 10000);
-    }else{
-        alert("You need to select 2 Frogs to breed");
-    }
-    
-    
-    
-});
-
 async function breedFrog(f1,f2){
     var dna = getDna();
     await froggyContractInstance.methods.breed(f1,f2).send({},function(error, txHash){
@@ -275,35 +257,26 @@ async function isApprovedForAll(_owner,_operator,callback){
      // Get the modal
      var modal = document.getElementById("myModal");
 
-     // Get the button that opens the modal
-     var btn = document.getElementById("myBtn");
-     
-     // Get the <span> element that closes the modal
-     var span = document.getElementsByClassName("close")[0];
-     
-     var sellButton = document.getElementById("sellButton");
-     
-     var removeButton = document.getElementById("removeButton");
-     // When the user clicks the button, open the modal 
-     btn.onclick = function() {
-       modal.style.display = "block";
-     }
-     
-     // When the user clicks on <span> (x), close the modal
-     span.onclick = function() {
-       modal.style.display = "none";
-     }
-     
-     // When the user clicks anywhere outside of the modal, close it
-     window.onclick = function(event) {
-       if (event.target == modal) {
-         modal.style.display = "none";
-       }
-     }
-     
-     sellButton.onclick = function() {
-      console.log("sellButton click registered");
-        var x = document.getElementById("priceWei").value;
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+    
+    var sellButton = document.getElementById("sellButton");
+        
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+    modal.style.display = "none";
+    }
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+    if (event.target == modal) {
         modal.style.display = "none";
-        setOffer(x);
-     }
+    }
+    }
+    
+    sellButton.onclick = function() {
+    console.log("sellButton click registered");
+    var x = document.getElementById("priceWei").value;
+    modal.style.display = "none";
+    setOffer(x);
+    }
