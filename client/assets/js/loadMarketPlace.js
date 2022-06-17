@@ -96,7 +96,7 @@ function createMiniFrog(id,_price){
         $('<label>').append(
             $('<input type="checkbox" id="scales" value="'+id+'">')
         ).append(
-            $('<div class="col-{breakpoint}-auto mini catBox m-2 light-b-shadow radio miniFrog'+id+'" style="padding-right: 65px;">').append(
+            $('<div class="col-{breakpoint}-auto mini frogBox m-2 light-b-shadow radio miniFrog'+id+'" style="padding-right: 65px;">').append(
                 $(' <div class="frog miniFrog'+id+'">').append(
                     $(' <div class="frog__head miniFrog'+id+'">').append(
                         $(' <div class="frog__freckles miniFrog'+id+'">').append(
@@ -144,7 +144,7 @@ function createMiniFrog(id,_price){
                 $('<br>')
             )
             .append(
-                $('<div class="dnaDiv miniFrog'+id+'" id="catDNA">').append(
+                $('<div class="dnaDiv miniFrog'+id+'" id="frogDNA">').append(
                     $('<b>').append(
                         $('<span>DNA:</span>').append(
                             $('<span class ="miniFrog'+id+'"id="dnahead"></span>'),
