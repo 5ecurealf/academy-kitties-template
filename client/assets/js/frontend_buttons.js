@@ -26,11 +26,11 @@ $(document).ready(function(){
          "lastNum" :  (Math.floor(Math.random()*10) +1) //range 1-3
         }
         
-        renderCat(randomDna) 
+        renderFrog(randomDna) 
    });
 
    $('.defaultFrogButton').click(function(event){
-        renderCat(defaultDNA) 
+        renderFrog(defaultDNA) 
     });
     
     $('.createFrogButton').click(function(event){

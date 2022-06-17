@@ -1,4 +1,4 @@
-.catBox {
+.frogBox {
     background-color: #e2efff;
     border-radius: 10px;
     padding-top: 50px;
@@ -36,12 +36,12 @@
   }
   
   /* tile STYLES */
-  [type=checkbox] + .catBox {
+  [type=checkbox] + .frogBox {
     cursor: pointer;
   }
   
   /* CHECKED STYLES */
-  [type=checkbox]:checked + .catBox {
+  [type=checkbox]:checked + .frogBox {
     outline: 2px solid #f00;
     background-color: black;
     color: blanchedalmond;

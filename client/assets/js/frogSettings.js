@@ -30,7 +30,7 @@ $( document ).ready(function() {
   $('#dnaanimation').html(defaultDNA.animation)
   $('#dnaspecial').html(defaultDNA.lastNum)
 
-  renderCat(defaultDNA)
+  renderFrog(defaultDNA)
 });
 
 function getDna(){
@@ -52,9 +52,9 @@ function getDna(){
     return parseInt(dna)
 }
 
-function renderCat(dna){
-    headColor(colors[dna.headColor],dna.headColor) //setting headColor default
-    $('#headcolor').val(dna.headColor) //setting slider's default 
+function renderFrog(dna){
+    headColor(colors[dna.headColor],dna.headColor) //calling frogFactory.js headColor() to change the colour of the frogs head
+    $('#headcolor').val(dna.headColor) //setting slider's value 
 
     mouthColor(colors[dna.mouthColor],dna.mouthColor)
     $('#mouthcolor').val(dna.mouthColor)
