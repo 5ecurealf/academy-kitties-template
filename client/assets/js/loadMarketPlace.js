@@ -213,23 +213,6 @@ function formatDna(_dna){
 	}
 }
 
-
-$(".buyFrogButton").click(function(){
-
-    var frogIndexes = [];
-    var priceString
-    $.each($("input:checkbox:checked"), function(){
-        frogIndexes.push($(this).val());
-        var strings = $('#price'+frogIndexes[0]+'').text()
-        priceString = strings.split(" ")[1]
-    });
-    if(frogIndexes.length == 1){
-        buyFrog(frogIndexes[0],priceString);
-    }else{
-        alert("Select a frog single to buy ");
-    }
-});
-
 async function buyFrog(_tokenId,_price){
     
     console.log("current account used in the transaction:",account)
