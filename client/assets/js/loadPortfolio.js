@@ -41,6 +41,7 @@ $( document ).ready(function() {
         froggyContractInstance.methods.tokensOfOwner(account).call({},function(error, frogArray){
             if(error){
                 console.log(error);
+                showSnackBar("Could not locate your portfolio, refresh the page")
             }else{
                 console.log("result",frogArray)
                 createMiniFrogs(frogArray)               
@@ -224,6 +225,7 @@ async function breedFrog(f1,f2){
     await froggyContractInstance.methods.breed(f1,f2).send({},function(error, txHash){
         if(error){
             console.log(error);
+            showSnackBar("Could not breed Frogs")
         }else{
             console.log(txHash);
         }
@@ -238,7 +240,7 @@ function showSnackBar(_string) {
     // Add the "show" class to DIV
     x.className = "show";
     // After 3 seconds, remove the show class from DIV
-    // setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
   }
 
 async function setOffer(_price){
@@ -251,6 +253,7 @@ async function setOffer(_price){
         await marketPlaceContractInstance.methods.setOffer(_price,_tokenId[0]).send({},function(error, txHash){
             if(error){
                 console.log(error);
+                showSnackBar("Error: An offer already exists or MarketPlace is not set up as an operator")
             }else{
                 console.log(txHash);
             }
@@ -262,23 +265,24 @@ async function setOffer(_price){
 
 async function setApprovalForAll(){
     console.log("setApprovalForAll() invoked")
-    await froggyContractInstance.methods.setApprovalForAll(marketPlaceContractAddress,true).send({},function(error, txHash){
+    await froggyContractInstance.methods.setApprovalForAll(marketPlaceContractAddress,true).send({from:account},function(error, txHash){
         if(error){
             console.log(error);
+            showSnackBar("Could not set MarketPlace as an operator")
         }else{
-            console.log(txHash);
+            console.log("setApprovalForAll txHash: ",txHash);
         }
     });
 }
 
 async function isApprovedForAll(_owner,_operator,callback){
     console.log("isApprovedForAll invoked");
-    await froggyContractInstance.methods.isApprovedForAll(_owner,_operator).call({},function(error, approved){
+    await froggyContractInstance.methods.isApprovedForAll(_owner,_operator).call({from:account},function(error, approved){
         if(error){
             console.log(error);
         }else{
             console.log("Marketplace contract approved?:",approved);
-            console.log('typeof approved',typeof approved);
+            // console.log('typeof approved',typeof approved);
             // return approved;
             if(!approved){
                 setApprovalForAll()
@@ -288,10 +292,10 @@ async function isApprovedForAll(_owner,_operator,callback){
     });
 }
 
-   // ------------Modal----------------
+// ------------Modal----------------
 
-     // Get the modal
-     var modal = document.getElementById("myModal");
+    // Get the modal
+    var modal = document.getElementById("myModal");
 
     // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("close")[0];

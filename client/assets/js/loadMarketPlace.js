@@ -38,6 +38,7 @@ $( document ).ready(function() {
         marketPlaceContractInstance.methods.getAllTokenOnSale().call({},function(error, txHash){
             if(error){
                 console.log(error);
+                showSnackBar("Could not load MarketPlace, refresh the page")
             }else{
                 console.log("getAllTokenOnSale output:",txHash)
                 frogIdArray = txHash
@@ -88,6 +89,7 @@ async function getOfferDetails(_genes,_frogId){
     await marketPlaceContractInstance.methods.getOffer(_frogId).call({},function(error, txHash){
         if(error){
             console.log(error);
+            showSnackBar("Could not locate frog"+_frogId+", refresh the page")
         }else{
             //console.log(txHash);
             console.log("Frog:"+_frogId+" price:",txHash.price)
@@ -235,6 +237,7 @@ async function buyFrog(_tokenId,_price){
     await marketPlaceContractInstance.methods.buyFroggy(_tokenId).send({from:account,value:priceInWei},function(error, txHash){
         if(error){
             console.log(error);
+            showSnackBar("Could not purchase Frog, please try again")
         }else{
             console.log(txHash);
             window.location.reload();
@@ -251,6 +254,7 @@ async function removeOffer(){
         await marketPlaceContractInstance.methods.removeOffer(_tokenId[0]).send({from:account},function(error, txHash){
             if(error){
                 console.log(error);
+                showSnackBar("Could not remove offer, Only the seller of frog"+_tokenId[0]+" can remove offer")
             }else{
                 console.log(txHash);
             }
@@ -268,7 +272,7 @@ function showSnackBar(_string) {
     // Add the "show" class to DIV
     x.className = "show";
     // After 3 seconds, remove the show class from DIV
-    // setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
   }
 
 
