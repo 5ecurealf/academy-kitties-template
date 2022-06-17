@@ -9,7 +9,6 @@ var web3 = new Web3(Web3.givenProvider);
 var froggyContractInstance; 
 var marketPlaceContractInstance;
 
-var user;
 // Rinkeby test network 
 // var frogContractAddress = "0x6207497730b1a78ae633D7f0b262ab53457c6644"; //change frogContractAddress variable whenever deploying a new froggyContractInstance of the contract
 // var marketPlaceContractAddress = "0xB4f5E28DADD79fC11ee27A7b96CCaE3408985B0d";
@@ -47,11 +46,48 @@ $( document ).ready(function() {
                 createMiniFrogs(frogArray)               
             }
         });
-
-        froggyContractInstance.events.Birth({}, function(error, event){ 
+        
+        froggyContractInstance.events.ApprovalForAll({}, function(error, event){ 
+            // console.log("ApprovalForAll Event values: ",event.returnValues);
+            var string = "";
+            string += 'Approved: '
+            string+= event.returnValues[0]
+            string += ', Operator: '
+            string+= event.returnValues[1]
+            string += ', Owner: '
+            string+= event.returnValues[2]
+            showSnackBar(string);
             // setTimeout(function(){location.reload();},2000);
-         });
-
+        });
+        froggyContractInstance.events.Birth({}, function(error, event){ 
+            var string = "";
+            string += 'Owner: '
+            string+= event.returnValues[0]
+            string += ', tokenId: '
+            string+= event.returnValues[1]
+            string += ', mum: '
+            string+= event.returnValues[2]
+            string += ', dad: '
+            string+= event.returnValues[3]
+            string += ', genes: '
+            string+= event.returnValues[4]
+            // console.log('string');
+            // console.log(string);
+            showSnackBar(string);
+            setTimeout(function() {location.reload();}, 5000);
+        });
+        marketPlaceContractInstance.events.MarketTransaction({}, function(error, event){ 
+            var string = "";
+            string += 'TxType: '
+            string+= event.returnValues[0]
+            string += ', Owner: '
+            string+= event.returnValues[1]
+            string += ', TokenId: '
+            string+= event.returnValues[2]
+            showSnackBar(string);
+        });
+        
+        //check if website has been set as an operator, and set if not
         isApprovedForAll(account,marketPlaceContractAddress);
     })         
 

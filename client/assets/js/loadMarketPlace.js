@@ -45,7 +45,18 @@ $( document ).ready(function() {
                 createMiniFrogs(numberOfFrogs,frogIdArray)               
             }
         });
-              
+        marketPlaceContractInstance.events.MarketTransaction({}, function(error, event){ 
+            console.log("MarketTransaction: ",event)
+            var string = "";
+            string += 'TxType: '
+            string+= event.returnValues[0]
+            string += ', Owner: '
+            string+= event.returnValues[1]
+            string += ', TokenId: '
+            string+= event.returnValues[2]
+            showSnackBar(string);
+            setTimeout(function() {location.reload();}, 5000);
+        });
 
     })         
 
