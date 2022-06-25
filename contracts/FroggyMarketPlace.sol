@@ -1,5 +1,4 @@
-pragma solidity >=0.4.22 <0.9.0;
-
+pragma solidity ^0.8.6;
 import "./Owner.sol";
 import "./IFroggyMarketplace.sol";
 
@@ -39,14 +38,14 @@ contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
     * Set the current froggyContract address and initialize the instance of froggycontract.
     * Requirement: Only the contract owner can call.
     */
-    function setfroggyContract(address _froggyContractAddress) public onlyOwner{
+    function setfroggyContract(address _froggyContractAddress) override public onlyOwner{
         froggyContractAddress = _froggyContractAddress;
     }
 
     /**
     * Get all tokenId's that are currently for sale. Returns an empty array if none exist.
      */
-    function getAllTokenOnSale() external view  returns(uint256[] memory listOfOffers){
+    function getAllTokenOnSale() override external view  returns(uint256[] memory listOfOffers){
         uint256 noOfOffers = tokenIds.length;
         
         uint256[] memory _listOfOffers = new uint256[](noOfOffers);
@@ -65,7 +64,7 @@ contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
     * Requirement: There can only be one active offer for a token at a time.
     * Requirement: Marketplace contract (this) needs to be an approved operator when the offer is created.
      */
-    function setOffer(uint256 _price, uint256 _tokenId) external{
+    function setOffer(uint256 _price, uint256 _tokenId) override external{
         require(
             msg.sender == _isOwner(_tokenId), "Only owner can create an offer to sell the frog" 
         );
@@ -85,7 +84,7 @@ contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
     /**
     * Get the details about a offer for _tokenId. Throws an error if there is no active offer for _tokenId.
      */
-    function getOffer(uint256 _tokenId) external view returns ( address seller, uint256 price, uint256 index, uint256 tokenId, bool active){
+    function getOffer(uint256 _tokenId) override external view returns ( address seller, uint256 price, uint256 index, uint256 tokenId, bool active){
         require(_offerExists(_tokenId) == true, "No active offer for provided token ");
         seller = tokenIdToOffer[_tokenId].seller;
         price = tokenIdToOffer[_tokenId].price;
@@ -99,7 +98,7 @@ contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
     * Emits the MarketTransaction event with txType "Remove offer"
     * Requirement: Only the seller of _tokenId can remove an offer.
      */
-    function removeOffer(uint256 _tokenId) public {
+    function removeOffer(uint256 _tokenId) override public {
         require(_offerExists(_tokenId),"Token offer does not exist");
         require(msg.sender == tokenIdToOffer[_tokenId].seller,"Only the seller of _tokenId can remove an offer.");
         //do I need to delete from the mapping? No because the token is removed from the array, so add check to see if it's in the array to check that it exists
@@ -120,7 +119,7 @@ contract FroggyMarketPlace is IfroggyMarketPlace, isOwner{
     * Requirement: The msg.value needs to equal the price of _tokenId
     * Requirement: There must be an active offer for _tokenId
      */
-    function buyFroggy(uint256 _tokenId) external payable{
+    function buyFroggy(uint256 _tokenId) override external payable{
         require(msg.value == _getTokenPrice(_tokenId));
         require(_offerExists(_tokenId));
 

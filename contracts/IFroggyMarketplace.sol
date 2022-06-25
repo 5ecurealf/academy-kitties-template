@@ -1,4 +1,4 @@
-pragma solidity >=0.4.22 <0.9.0;
+pragma solidity ^0.8.6;
 /*
  * Market place to trade froggies (should **in theory** be used for any ERC721 token)
  * It needs an existing froggy contract to interact with

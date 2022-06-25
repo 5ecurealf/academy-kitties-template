@@ -1,4 +1,4 @@
-pragma solidity >=0.4.22 <0.9.0;
+pragma solidity ^0.8.6;
 import "./IERC721.sol";
 import "./IERC165.sol";
 import "./Owner.sol";
@@ -57,7 +57,7 @@ contract FroggyContract is IERC721,IERC165,isOwner{
      * @dev Returns whether contract supports _interfaceId. 
      */
      //#
-    function supportsInterface(bytes4 _interfaceId) public view returns(bool){
+    function supportsInterface(bytes4 _interfaceId) override public view returns(bool){
         return _interfaceId == _INTERFACE_ID_ERC721 || _interfaceId == _INTERFACE_ID_ERC165;
     }
 
@@ -65,26 +65,26 @@ contract FroggyContract is IERC721,IERC165,isOwner{
      * @dev Returns the number of tokens in ``owner``'s account.
      */
      
-    function balanceOf(address owner) public view returns (uint256 balance){
+    function balanceOf(address owner) override public view returns (uint256 balance){
         return ownershipTokenCount[owner];
     }
     /*
      * @dev Returns the total number of tokens in circulation.
      */
 
-    function totalSupply() public view returns (uint256 total){
+    function totalSupply() override public view returns (uint256 total){
         return Frogs.length;
     }
     /*
      * @dev Returns the name of the token.
      */
-    function name() public view returns (string memory tokenName){
+    function name() override public view returns (string memory tokenName){
         return _name;
     }
     /*
      * @dev Returns the symbol of the token.
      */
-    function symbol() public view returns (string memory tokenSymbol){
+    function symbol() override public view returns (string memory tokenSymbol){
         return _symbol;
     }
     /**
@@ -95,7 +95,7 @@ contract FroggyContract is IERC721,IERC165,isOwner{
      * - `tokenId` must exist.
      */
      
-    function ownerOf(uint256 tokenId) public view returns (address owner){
+    function ownerOf(uint256 tokenId) override public view returns (address owner){
         require(_frogExists(tokenId), "Token does not exist");
         return frogIndexToOwner[tokenId];
     }
@@ -111,7 +111,7 @@ contract FroggyContract is IERC721,IERC165,isOwner{
      * Emits a {Transfer} event.
      */
      
-    function transfer(address to, uint256 tokenId) public{
+    function transfer(address to, uint256 tokenId) override public{
         require(to != address(0), "cannot transfer to zero address");
         require(to != address(this), "cannot transfer to contract address");
         require( _owns(msg.sender,tokenId), "You do not own this token");
@@ -192,7 +192,7 @@ contract FroggyContract is IERC721,IERC165,isOwner{
         
     }
     
-    function approve(address _approved, uint256 _tokenId) external {
+    function approve(address _approved, uint256 _tokenId) override external {
         
         require(_frogExists(_tokenId),"Frog does not exist");
 
@@ -208,18 +208,18 @@ contract FroggyContract is IERC721,IERC165,isOwner{
     }
 
     // enabling/disabling an operator to be able to have control of msg.sender's token 
-    function setApprovalForAll(address _operator, bool _approved) external{
+    function setApprovalForAll(address _operator, bool _approved) override external{
         require(msg.sender != _operator, "Cannot set yourself as an operator ");
         OperatorApprovals[msg.sender][_operator] = _approved;
         emit ApprovalForAll(msg.sender, _operator, _approved);
     }
 
-    function getApproved(uint256 _tokenId) public view returns(address){
+    function getApproved(uint256 _tokenId) override public view returns(address){
         require(_frogExists(_tokenId),"token ID provided is not a valid NFT");
         return FrogIdxToApprovedAddress[_tokenId];
     }
 
-    function isApprovedForAll(address _owner, address _operator) public view returns (bool){
+    function isApprovedForAll(address _owner, address _operator) override public view returns (bool){
         return OperatorApprovals[_owner][_operator];
     }
     
@@ -228,7 +228,7 @@ contract FroggyContract is IERC721,IERC165,isOwner{
     }
 
 
-    function transferFrom(address _from, address _to, uint256 _tokenId) public{
+    function transferFrom(address _from, address _to, uint256 _tokenId) override public{
         require(_to != address(0), "recieving contract is not a valid address");
         require(_to != address(this), "cannot transfer to contract address");
         require(msg.sender == _from || 
@@ -246,11 +246,11 @@ contract FroggyContract is IERC721,IERC165,isOwner{
     ///  checks if `_to` is a smart contract (code size > 0). If so, it calls
     ///  `onERC721Received` on `_to` and throws if the return value is not
     ///  `bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"))`.
-    function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes memory data) public{
+    function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes memory data) override public{
         _safeTransfer(_from, _to, _tokenId, data);
     }
     
-    function safeTransferFrom(address _from, address _to, uint256 _tokenId) public{
+    function safeTransferFrom(address _from, address _to, uint256 _tokenId) override public{
         _safeTransfer(_from, _to, _tokenId, "");
     }
 
