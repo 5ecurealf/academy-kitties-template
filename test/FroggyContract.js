@@ -262,4 +262,21 @@ contract("FroggyContract", (accounts) => {
     
      })
 
+     context("tokensOfOwner() Tests", async () => {
+
+        it("should be able to return the tokens a user owns ", async() => {
+             await froggyContractInstance.createFrogGen0(1111111111111111,{from:accounts[0]})
+             await froggyContractInstance.createFrogGen0(1111111111111131,{from:accounts[0]})
+             const result = await froggyContractInstance.tokensOfOwner(accounts[0],{from:accounts[0]})
+             assert.equal(result.length,2)
+ 
+         })
+         
+        it("return an array of length 0 if account does not own any frogs ", async() => {
+            const result = await froggyContractInstance.tokensOfOwner(accounts[0],{from:accounts[0]})
+            assert.equal(result.length,0)
+         })
+     
+      })
+
 })    

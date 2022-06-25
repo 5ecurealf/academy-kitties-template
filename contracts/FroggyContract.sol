@@ -279,41 +279,6 @@ contract FroggyContract is IERC721,IERC165,isOwner{
         return (size > 0);
     }
     
-    /*function _mixDna(uint256 _dadDna, uint256 _mumDna) internal view returns(uint256){
-
-        uint[8] memory dnaArray;
-        uint8 randomByte = uint8( block.timestamp % 255); //00000000 - 11111111 (0-255)
-        uint8 dnaArrayIdx= 7;
-        uint256 newDna = 0;
-
-        for(uint i = 0; i<128; i = i * 2 ){
-            //iterate thru each bit and if ==0 take from dad, if ==1 take from mum
-            if(randomByte & i != 0){
-                //get the last 2 bits of _mumDna 11 22 33 44 55 66 77 88 -> 88                
-                uint mum2Nums = _mumDna % 100;                
-                //append the 2 numbers onto the end of the array
-                dnaArray[dnaArrayIdx] = mum2Nums;
-                //decrease the index of the array 
-                
-            }else{
-                uint dad2Nums = _dadDna % 100;
-                dnaArray[dnaArrayIdx] = dad2Nums;
-            }
-            _mumDna = _mumDna /100;
-            _dadDna = _dadDna /100;
-            dnaArrayIdx--;            
-        }
-
-        for(uint i =0; i<8; i++){
-            newDna = newDna += dnaArray[i];
-            if(i != 7){
-                newDna = newDna * 100;
-            }
-        }
-        return newDna;
-    }
-    */
-
     function _mixDna(uint256 _dadDna, uint256 _mumDna) public view returns(uint256){
 
         uint256[8] memory geneArray;
