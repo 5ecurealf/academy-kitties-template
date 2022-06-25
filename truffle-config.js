@@ -23,8 +23,8 @@ const privateKeys= ["e7b77ccd45015aed93c992419522b75e578b3ed72ba761c54d1edbc27a4
 const privateKey = "e7b77ccd45015aed93c992419522b75e578b3ed72ba761c54d1edbc27a4b4e62";
 const endpointUrl = "https://rinkeby.infura.io/v3/13d47ae000d64dd19c82757d8d7e9c5f";
 //
-// const fs = require('fs');
-// const mnemonic = fs.readFileSync(".secret").toString().trim();
+const fs = require('fs');
+const mnemonic = fs.readFileSync(".secret").toString().trim();
 
 module.exports = {
   /**
