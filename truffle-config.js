@@ -19,9 +19,9 @@
  */
 
 const HDWalletProvider = require('@truffle/hdwallet-provider');
-const privateKeys= ["e7b77ccd45015aed93c992419522b75e578b3ed72ba761c54d1edbc27a4b4e62","6ca7a838213e7fa17d6d3e5944cfc8c2081557a132b21ec8b4e9368c3935ef8d"];
-const privateKey = "e7b77ccd45015aed93c992419522b75e578b3ed72ba761c54d1edbc27a4b4e62";
+const developementPrivateKeys= ["e7b77ccd45015aed93c992419522b75e578b3ed72ba761c54d1edbc27a4b4e62","6ca7a838213e7fa17d6d3e5944cfc8c2081557a132b21ec8b4e9368c3935ef8d"];
 const endpointUrl = "https://rinkeby.infura.io/v3/13d47ae000d64dd19c82757d8d7e9c5f";
+const mainnetEndPoint = "https://mainnet.infura.io/v3/13d47ae000d64dd19c82757d8d7e9c5f"
 //
 const fs = require('fs');
 const mnemonic = fs.readFileSync(".secret").toString().trim();
@@ -54,10 +54,19 @@ module.exports = {
       // Special function to setup the provider
       provider: function () {
         // Setting the provider with the Infura Rinkeby address and Token
-        return new HDWalletProvider(privateKeys, endpointUrl)
+        return new HDWalletProvider(developementPrivateKeys, endpointUrl)
       },
       // Network id is 4 for Rinkeby
       network_id: 4
+    },
+    mainnet: {
+      // Special function to setup the provider
+      provider: function () {
+        // Setting the provider with the Infura Rinkeby address and Token
+        return new HDWalletProvider(mnemonic, mainnetEndPoint)
+      },
+      // Network id is 4 for Rinkeby
+      network_id: 1
     }
   },
   compilers: {

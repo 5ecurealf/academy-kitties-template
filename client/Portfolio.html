@@ -19,20 +19,32 @@
   <link rel="stylesheet" href="assets/css/factory.css">
   <link rel="stylesheet" href="assets/css/frontend.css">
   <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/potatoStyle.css">
   
 </head>
   <body>
-    <header>
-        <img class = "logo" src="./frogLogo.png" alt="logo">
-        <nav>
-            <ul class="nav_links">
-              <li><a href="./index.html">Factory</a></li>
-              <li><a href="./Portfolio.html">Your Frogs</a></li>
-              <li><a href="./MarketPlace.html">MarketPlace</a></li>
-            </ul>
-        </nav>
-    </header>
-    <div class="container p-5" style="margin-top: 5vh;margin-bottom: 10vh;">
+    <div class="potato">
+      <!-- partial:index.partial.html -->
+      <h1>ALFROGS <span>by Alfie</span></h1>
+    
+      <input id="burger" type="checkbox" />
+    
+      <label id = "burgerLabel" for="burger">
+          <span></span>
+          <span></span>
+          <span></span>
+      </label>
+    
+      <nav>    
+        <ul>
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./Factory.html">Factory</a></li>
+          <li><a href="./MarketPlace.html">MarketPlace</a></li>
+        </ul>  
+      </nav>
+      <!-- partial -->
+    </div>
+    <div class="container p-5" style="margin-top: 100px;margin-bottom: 10vh;">
       <div align="center">
       <h1 class="c-white">Portfolio</h1>
       <p class="c-white">This is the portolio of frogs that you own. Select frogs to Breed or Sell.</p>
@@ -50,23 +62,24 @@
     </div>
     
 
-<!-- The Modal -->
-<div id="myModal" class="modal">
+  <!-- The Modal -->
+  <div id="myModal" class="modal">
 
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <div class = "priceContainer">
-      <label>Price Wei</label>
-      <input type="number" id="priceWei">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class = "priceContainer">
+        <label id= "priceLabel">Price: </label>
+        <input type="number" id="priceWei" style="width: 200px;" >
+        <label id= "priceLabel">Wei</label>
+        <button class="button" id = "sellButton">Set Offer</button>
+      </div>
     </div>
-    <button class="button" id = "sellButton">SELL</button>
+
   </div>
 
-</div>
 
-
-    
+    </div>    
      <!-- Frog tab -->
      <div id="snackbar">Some text </div>
     <footer align="left">

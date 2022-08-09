@@ -1,179 +1,128 @@
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Academy kitties </title>
-  <script type="text/javascript" src="assets/js/jquery-3.4.1.js"></script>
-  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-  <script src="assets/bootstrap/js/popper.js"></script>
-  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-  <script src="assets/js/web3.min.js"></script>
-  <script src="./abiFrogContract.js"></script>
-  <script src="./abiMarketPlaceContract.js"></script>
-  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALFrogs </title>
 
-  <link rel="stylesheet" href="assets/css/mystyle.css">
-  <link rel="stylesheet" href="assets/css/frogs.css">
-  <link rel="stylesheet" href="assets/css/colors.css">
-  <link rel="stylesheet" href="assets/css/factory.css">
-  <link rel="stylesheet" href="assets/css/frontend.css">
-  <link rel="stylesheet" href="assets/css/animations.css">
-  
+
+    <script type="text/javascript" src="assets/js/jquery-3.4.1.js"></script>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <script src="assets/bootstrap/js/popper.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/web3.min.js"></script>
+    <link rel="stylesheet" href="assets/css/mystyle.css">
+    <link rel="stylesheet" href="assets/css/colors.css">
+    <link rel="stylesheet" href="assets/css/frontend.css">
+    <link rel="stylesheet" href="assets/css/frogs.css">
+    <link rel="stylesheet" href="assets/css/potatoStyle.css">
+
 </head>
-  <body>
-    <header>
-        <img class = "logo" src="./frogLogo.png" alt="logo">
-        <nav>
-            <ul class="nav_links">
-                <li><a href="./index.html">Factory</a></li>
-                <li><a href="./Portfolio.html">Your Frogs</a></li>
-                <li><a href="./MarketPlace.html">MarketPlace</a></li>
-            </ul>
+
+<body cz-shortcut-listen="true" style="background-color: white;">
+
+    <div class="potato">
+        <!-- partial:index.partial.html -->
+        <h1>ALFROGS <span>by Alfie</span></h1>
+      
+        <input id="burger" type="checkbox" />
+      
+        <label id = "burgerLabel" for="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+      
+        <nav>    
+          <ul>
+            <li><a href="./Factory.html">Factory</a></li>
+            <li><a href="./Portfolio.html">Your Frogs</a></li>
+            <li><a href="./MarketPlace.html">MarketPlace</a></li>
+          </ul>  
         </nav>
-    </header>
-    <div class="container p-5" style="margin-top: 12vh;margin-bottom: 10vh;">
-        <div align="center">
-        <h1 class="c-white">Frogs-Factory</h1>
-        <p class="c-white">Create your custom Frog</p>
-    </div>
-        <div class="row">
-            <div class="col-lg-4 frogBox m-2 light-b-shadow">
-                   <div class="frog">
-                    <div class="frog__head">
-                        <div class="frog__freckles">
-                            <div class="frog__freckle" id="freckle1"></div>
-                            <div class="frog__freckle" id="freckle2"></div>
-                            <div class="frog__freckle" id="freckle3"></div>
-                        </div>
+        <!-- partial -->
+      </div>
 
-                        <div class="frog__warts">
-                            <div class="frog__wart" id="wart1"></div>
-                            <div class="frog__wart" id="wart2"></div>
-                        </div>
-                    </div>
-                    <div class="frog__eye">
-                        <div class="iris">
-                            <div class="reflection1"></div>
-                            <div class="reflection2"></div>
-                            <div class="frog__eyelid "></div>
-                        </div>
-                    </div>
-                    <div class="frog__eye right">
-                        <div class="iris right">
-                            <div class="reflection1"></div>
-                            <div class="reflection2"></div>
-                            <div class="frog__eyelid "></div>
-                        </div>
-                    </div>
-                    <div class="frog__mouth">
-                        <div class="tongue"></div>
-                    </div>
-                </div>
-                <br>
-                <div class="dnaDiv" id="frogDNA">
-                    <b>
-                        DNA:
-                        <!-- Colors -->
-                         <span id="dnahead"></span>
-                         <span id="dnamouth"></span>
-                         <span id="dnaeyes"></span>
-                         <span id="dnafreckles"></span>
-                        
-                         <!-- Frogtributes -->
-                         <span id="dnatongue"></span>
-                         <span id="dnaeyeShape"></span>
-                         <span id="dnawartsShape"></span>
-                         <span id="dnawartsColor"></span>
-                         <span id="dnaanimation"></span>
-                         <span id="dnaspecial"></span>
-                    </b>
-                </div>
+
+
+<div class="animation-wrapper">
+  <div class="particle particle-1"></div>
+  <div class="particle particle-2"></div>
+  <div class="particle particle-3"></div>
+</div>
+
+    <div class="frontend" align="center" style="margin-top:100px;">
+      <img class = "frogGroup" src="./assets/images/frogLine.png" >
+        <div class="container" >
+            <div class="banner" >
+                <h3 class="c-white m-2">Collect and breed Frogs!</h3>
+                <button class="btn btn-connect white-btn mt-2">Connect Metamask Account</button>
             </div>
-            <div class="col-lg-7 frogtributes m-2 light-b-shadow">
-                <!-- Tab initialisation -->
-                <ul class="tab_navigation">
-                    <li>Frog Colors</li>
-                    <li>Frogtributes</li>
-                </ul>
-                <!-- Frog colors -->
-                <div id="frogColors" class="tabcontents">
-                    <div class="form-group">
-                        <label for="formControlRange"><b>Head</b><span class="badge badge-dark ml-2" id="headcode"></span></label>
-                        <input type="range" min="10" max="98" class="form-control-range" id="headcolor">
-                    </div>
-                    <div class="form-group">
-                        <label for="formControlRange"><b>Mouth</b><span class="badge badge-dark ml-2" id="mouthcode"></span></label>
-                        <input type="range" min="10" max="98" class="form-control-range" id="mouthcolor">
-                    </div>
-                    <div class="form-group">
-                        <label for="formControlRange"><b>Eye Color</b><span class="badge badge-dark ml-2" id="eyecode"></span></label>
-                        <input type="range" min="10" max="98" class="form-control-range" id="eyecolor">
-                    </div>
-                    <div class="form-group">
-                        <label for="formControlRange"><b>Freckles</b><span class="badge badge-dark ml-2" id="frecklecode"></span></label>
-                        <input type="range" min="10" max="98" class="form-control-range" id="frecklecolor">
-                    </div>
-                </div>
-
-                <!-- Frog Shapes -->
-                <div id="frogtributes" class="tabcontents">
-
-                    <div class="form-group">
-                        <label for="formControlRange"><b>Tongue Shape</b><span class="badge badge-dark ml-2" id="tongueName"></span></label>
-                        <input type="range" min="1" max="4" class="form-control-range" id="tongueShape">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="formControlRange"><b>Eye Shape</b><span class="badge badge-dark ml-2" id="eyeShapeName"></span></label>
-                        <input type="range" min="1" max="3" class="form-control-range" id="eyeShape">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="formControlRange"><b>Warts</b><span class="badge badge-dark ml-2" id="wartsShapeName"></span></label>
-                        <input type="range" min="1" max="3" class="form-control-range" id="wartShape">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="formControlRange"><b>Warts Color</b><span class="badge badge-dark ml-2" id="wartsCode"></span></label>
-                        <input type="range" min="10" max="98" class="form-control-range" id="wartColor">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="formControlRange"><b>Animations</b><span class="badge badge-dark ml-2" id="animationName"></span></label>
-                        <input type="range" min="1" max="3" class="form-control-range" id="animationType">
-                    </div>
-                    
-                </div>
-
-                <!-- Buttons -->
-                <div class="tab">
-                    <button class="defaultFrogButton button" >Default Frog</button>
-                    <button class="randomiseFrogButton button">Random</button>
-                    <button class="createFrogButton button">Create Frog</button>
-                  </div>
-
-            </div>
-
-            </div>
-            <br>
+        </div>
+        <div>
 
         </div>
 
+    </div>
 
+    <div class="container middleBox" align="center" >
+        <h1 class="m-4" style="color:white">Features</h1>
+        <div class="row">
+
+            <div class="col-lg-4 pointer" >
+                <div class="featureBox">
+                    <div class="egg">
+                        <img src="assets/images/coin.png" style="margin: 25px;">
+                    </div>
+
+                    <h4>Buy & sell Frogs</h4>
+                    <p>
+                     Buy or sell Frogs in a market place using crypto-currency!
+                     you can find all kind or weird and special Frogs.
+                     
+                     
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 pointer">
+                <div class="featureBox" style="background-color: #e2efff;">
+                    <div class="egg">
+                        <img src="assets/images/reward.png" style="margin: 25px;">
+                    </div>
+                    <h4>Create collections & earn rewards</h4>
+                    <p>
+                       Collect all types of kitties with unique Cattributes!
+                       Earn special kitties from breeding, sell them or <b>Love</b> them.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 pointer">
+                <div class="featureBox">
+                    <div class="egg">
+                        <img src="assets/images/pop.png" style="margin: 25px;">
+                    </div>
+                    <h4>Breed adorable cats & unlock rare traits</h4>
+                    <p>
+                        Create unique kitties by pairing two cats. Fuse them to get the most rare kitties!
+                    </p>
+                </div>
+            </div>
+        </div>
 
     </div>
-    
+
     <div id="snackbar">Some text </div>
-    
-    <footer align="left">
+
+    <footer align="left" style="background-color: #e2efff;">
         <p>Created by Alfie 2022</p>
     </footer>
 
-  </body>
-  <script src="assets/js/index.js"></script>
-  <script src="assets/js/colors.js"></script>
-  <script src="assets/js/frogSettings.js"></script>
-  <script src="assets/js/frogFactory.js"></script>
-  <script src="assets/js/frontend_buttons.js"></script>
+</body>
+
+<script src="assets/js/components.js"></script>
+<script src="assets/js/frontend_buttons.js"></script>
+<script src="assets/js/index.js"></script>
+
+
 
 </html>

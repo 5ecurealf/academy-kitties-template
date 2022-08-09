@@ -7,10 +7,28 @@ html {
     box-sizing: border-box;
     overflow-y: scroll;
 }
-body {
-    background: #607d8b;
- 
+body{
+	background: linear-gradient(-45deg, #000000, #3e9f8a,#b3169b);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
 }
+.banner{
+	background: linear-gradient(-45deg, #000000, #3e9f8a,#b3169b);
+	animation: gradient 15s ease infinite;
+}
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
 .frog {
     width: 200px;
     height: 100px;

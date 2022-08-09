@@ -81,6 +81,14 @@ $(document).ready(function(){
         }
     });
 
+    // <-------  HomePage  ------->
+
+    // connect Metamask button
+    $(".btn-connect").click(function(){
+        console.log("button registered")
+        connectWallet()
+    });
+    
     // <------- Other ------->
     // open Modal button Portfolio.setOffer Marketplace.removeOffer
     $("#myBtn").click(function(){

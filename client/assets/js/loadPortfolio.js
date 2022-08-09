@@ -9,12 +9,12 @@ var web3 = new Web3(Web3.givenProvider);
 var froggyContractInstance; 
 var marketPlaceContractInstance;
 
-// Rinkeby test network 
-// var frogContractAddress = "0x6207497730b1a78ae633D7f0b262ab53457c6644"; //change frogContractAddress variable whenever deploying a new froggyContractInstance of the contract
-// var marketPlaceContractAddress = "0xB4f5E28DADD79fC11ee27A7b96CCaE3408985B0d";
-// 
-var frogContractAddress = "0x284c39b91324d3447Eb8C47AbD2c9e588Dba2312"; //change frogContractAddress variable whenever deploying a new froggyContractInstance of the contract
-var marketPlaceContractAddress = "0x8d96Ae79465C2dF25f381B218a574584C0fa845A";
+// rinkeby test network 
+var frogContractAddress = "0xa6c023E43C608344d291c9d195c362410Ec111C9"; //test network address
+var marketPlaceContractAddress = "0xe30689CF5b5e3f7b8dEf666441A13186d19A5EFb";
+
+// var frogContractAddress = "0xfF9e3fFeb7a7318D943cb005572e7175043A5BCC"; //change frogContractAddress variable whenever deploying a new froggyContractInstance of the contract
+// var marketPlaceContractAddress = "0xb93dAD7B67Da8bAc7C5669c645b8042eF1c89033";
 
 var numberOfFrogs = 0;
 
@@ -118,77 +118,62 @@ async function createMiniFrogs(_frogArray){
 }
 
 function createMiniFrog(id){
-    $(".row").append(
-        $('<label>').append(
-            $('<input type="checkbox" id="scales" value="'+id+'">')
-        ).append(
-            $('<div class="col-{breakpoint}-auto mini frogBox m-2 light-b-shadow radio miniFrog'+id+'" style="padding-right: 65px;">').append(
-                $(' <div class="frog miniFrog'+id+'">').append(
-                    $(' <div class="frog__head miniFrog'+id+'">').append(
-                        $(' <div class="frog__freckles miniFrog'+id+'">').append(
-                            $('<div class="frog__freckle miniFrog'+id+'" id="freckle1"></div>')
-                        )
-                        .append(
-                            $('<div class="frog__freckle miniFrog'+id+'" id="freckle2"></div>')
-                        )
-                        .append(
-                            $('<div class="frog__freckle miniFrog'+id+'" id="freckle3"></div>')
-                        )
-
-                    ).append(
-                        $('<div class="frog__warts miniFrog'+id+'">').append(
-                            $('<div class="frog__wart miniFrog'+id+'" id="wart1"></div>')
-                            ,$('<div class="frog__wart miniFrog'+id+'" id="wart2"></div>')
-                        )
-                    )
-                )
-                .append(
-                    $('<div class="frog__eye miniFrog'+id+'">').append(
-                        $('<div class="iris miniFrog'+id+'">').append(
-                            $('<div class="reflection1 miniFrog'+id+'"></div>'),
-                            $('<div class="reflection2 miniFrog'+id+'"></div>'),
-                            $('<div class="frog__eyelid miniFrog'+id+'"></div>')
-                        )
-                    )
-                )
-                .append(
-                    $('<div class="frog__eye right miniFrog'+id+'">').append(
-                        $('<div class="iris right miniFrog'+id+'">').append(
-                            $('<div class="reflection1 miniFrog'+id+'"></div>'),
-                            $('<div class="reflection2 miniFrog'+id+'"></div>'),
-                            $('<div class="frog__eyelid miniFrog'+id+'"></div>')
-                        )
-                    )
-                )
-                .append(
-                    $('<div class="frog__mouth miniFrog'+id+'">').append(
-                        $('<div class="tongue miniFrog'+id+'"></div>')
-                    )
-                )
-            )
-            .append(
-                $('<br>')
-            )
-            .append(
-                $('<div class="dnaDiv miniFrog'+id+'" id="frogDNA">').append(
-                    $('<b>').append(
-                        $('<span>DNA:</span>').append(
-                            $('<span class ="miniFrog'+id+'"id="dnahead"></span>'),
-                            $('<span class ="miniFrog'+id+'"id="dnamouth"></span>'),
-                            $('<span class ="miniFrog'+id+'"id="dnaeyes"></span>'),
-                            $('<span class ="miniFrog'+id+'"id="dnafreckles"></span>'),
-                            $('<span class ="miniFrog'+id+'"id="dnatongue"></span>'),
-                            $('<span class ="miniFrog'+id+'"id="dnaeyeShape"></span>'),
-                            $('<span class ="miniFrog'+id+'"id="dnawartsShape"></span>'),
-                            $('<span class ="miniFrog'+id+'"id="dnawartsColor"></span>'),
-                            $('<span class ="miniFrog'+id+'"id="dnaanimation"></span>'),
-                            $('<span class ="miniFrog'+id+'"id="dnaspecial"></span>')
-                        )
-                    )
-                )
-            )
-        )
-    );
+    var newFrog = 
+    `<label>
+    <input type="checkbox" id="scales" value="`+id+`">
+    <div class="col-{breakpoint}-auto mini frogBox m-2 light-b-shadow radio miniFrog`+id+`" style="padding-right: 65px;">
+        <div class="frog miniFrog`+id+`">
+            <div class="frog__head miniFrog`+id+`" style="background: rgb(140, 177, 117);">
+                <div class="frog__freckles miniFrog`+id+`">
+                    <div class="frog__freckle miniFrog`+id+`" id="freckle1" style="background: rgb(63, 17, 116);"></div>
+                <div class="frog__freckle miniFrog`+id+`" id="freckle2" style="background: rgb(63, 17, 116);"></div>
+                <div class="frog__freckle miniFrog`+id+`" id="freckle3" style="background: rgb(63, 17, 116);"></div>
+            </div>
+            <div class="frog__warts miniFrog`+id+`">
+                <div class="frog__wart miniFrog`+id+`" id="wart1" style="height: 0px; width: 10px; top: 12px;"></div>
+                <div class="frog__wart miniFrog`+id+`" id="wart2" style="height: 0px; width: 10px;"></div>
+            </div>
+        </div>
+        <div class="frog__eye miniFrog`+id+`" style="background: rgb(130, 40, 108); height: 80px; width: 80px; left: 64px;">
+            <div class="iris miniFrog`+id+`" style="height: 75px; width: 75px;">
+                <div class="reflection1 miniFrog`+id+`"></div>
+                <div class="reflection2 miniFrog`+id+`"></div>
+                <div class="frog__eyelid miniFrog`+id+`" style="background: rgb(130, 40, 108);"></div>
+            </div>
+        </div>
+        <div class="frog__eye right miniFrog`+id+`" style="background: rgb(130, 40, 108); height: 80px; width: 80px; left: 64px;">
+            <div class="iris right miniFrog`+id+`" style="height: 75px; width: 75px;">
+                <div class="reflection1 miniFrog`+id+`"></div>
+                <div class="reflection2 miniFrog`+id+`"></div>
+                <div class="frog__eyelid miniFrog`+id+`" style="background: rgb(130, 40, 108);"></div>
+            </div>
+        </div>
+        <div class="frog__mouth miniFrog`+id+`" style="background: rgb(181, 4, 75);">
+            <div class="tongue miniFrog`+id+` lick" style="height: 70%; width: 47%;"></div>
+        </div>
+    </div>
+    <br>
+    <div class="dnaDiv miniFrog`+id+`" id="frogDNA">
+        <b>
+            <span>
+                DNA:
+                <span class="miniFrog`+id+`" id="dnahead">37</span>
+                <span class="miniFrog`+id+`" id="dnamouth">16</span>
+                <span class="miniFrog`+id+`" id="dnaeyes">83</span>
+                <span class="miniFrog`+id+`" id="dnafreckles">11</span>
+                <span class="miniFrog`+id+`" id="dnatongue">2</span>
+                <span class="miniFrog`+id+`" id="dnaeyeShape">2</span>
+                <span class="miniFrog`+id+`" id="dnawartsShape">1</span>
+                <span class="miniFrog`+id+`" id="dnawartsColor">50</span>
+                <span class="miniFrog`+id+`" id="dnaanimation">3</span>
+                <span class="miniFrog`+id+`" id="dnaspecial">10</span>
+            </span>
+        </b>
+    </div>
+    
+    </div>
+</label>`
+    $(".row").append(newFrog)
 }
 
 function renderMiniFrog(dna,id){

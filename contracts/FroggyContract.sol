@@ -322,26 +322,26 @@ contract FroggyContract is IERC721,IERC165,isOwner{
     }
 
     function tokensOfOwner(address _owner) public view returns(uint256[] memory ownerTokens) {
-    uint256 tokenCount = balanceOf(_owner);
+        uint256 tokenCount = balanceOf(_owner);
 
-    if (tokenCount == 0) {
-        return new uint256[](0);
-    } else {
-        uint256[] memory result = new uint256[](tokenCount);
-        uint256 totalFrogs = totalSupply();
-        uint256 resultIndex = 0;
+        if (tokenCount == 0) {
+            return new uint256[](0);
+        } else {
+            uint256[] memory result = new uint256[](tokenCount);
+            uint256 totalFrogs = totalSupply();
+            uint256 resultIndex = 0;
 
-        uint256 frogId;
+            uint256 frogId;
 
-        for (frogId = 0; frogId <= totalFrogs; frogId++) {
-            if (frogIndexToOwner[frogId] == _owner) {
-                result[resultIndex] = frogId;
-                resultIndex++;
+            for (frogId = 0; frogId <= totalFrogs; frogId++) {
+                if (frogIndexToOwner[frogId] == _owner) {
+                    result[resultIndex] = frogId;
+                    resultIndex++;
+                }
             }
-        }
 
-        return result;
+            return result;
+        }
     }
-  }
 
 }   

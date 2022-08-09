@@ -19,27 +19,39 @@
   <link rel="stylesheet" href="assets/css/factory.css">
   <link rel="stylesheet" href="assets/css/frontend.css">
   <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/potatoStyle.css">
   
 </head>
   <body>
-    <header>
-        <img class = "logo" src="./frogLogo.png" alt="logo">
-        <nav>
-            <ul class="nav_links">
-                <li><a href="./index.html">Factory</a></li>
-                <li><a href="./Portfolio.html">Your Frogs</a></li>
-                <li><a href="./MarketPlace.html">MarketPlace</a></li>
-            </ul>
-        </nav>
-    </header>
-    <div class="container p-5" style="margin-top: 6vh;margin-bottom: 10vh;">
+    <div class="potato">
+      <!-- partial:index.partial.html -->
+      <h1>ALFROGS <span>by Alfie</span></h1>
+    
+      <input id="burger" type="checkbox" />
+    
+      <label id = "burgerLabel" for="burger">
+          <span></span>
+          <span></span>
+          <span></span>
+      </label>
+    
+      <nav>    
+        <ul>
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./Factory.html">Factory</a></li>
+          <li><a href="./Portfolio.html">Your Frogs</a></li>
+        </ul>  
+      </nav>
+      <!-- partial -->
+    </div>
+    <div class="container p-5" style="margin-top: 100px;margin-bottom: 10vh;">
       <div align="center">
-      <h1 class="c-white">Market Place</h1>
-      <p class="c-white">View frogs on offer to buy!</p>
-  </div>
+        <h1 class="c-white">Market Place</h1>
+        <p class="c-white">View frogs on offer to buy!</p>
+      </div>
     <div class="container">
-        <div class="row ">
-        </div>     
+      <div class="row ">
+      </div>     
     </div>
     <div class="order-last portfolioButtonDiv">
       <button class="portfolioButton buyFrogButton button ">Buy Frog</button> 
@@ -65,6 +77,8 @@
 
      <!-- Frog tab -->
      <div id="snackbar">Some text </div>
+
+    </div>
     <footer align="left">
         <p>Created by Alfie 2022</p>
     </footer>
